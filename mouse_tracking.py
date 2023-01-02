@@ -7,9 +7,9 @@ from taurus.qt.qtgui.container import TaurusWidget
 draw_components = {
     'comp1':{
         'caller':'drawRect',
-        'init_pars': {'x':0,'y':0,'width':20,'height':80},
-        'models': {'x':None,'y':'ior1','width':None,'height':None},
-        'model_scales': {'x':0,'y':50,'width':0,'height':0},
+        'init_pars': {'x':100,'y':100,'width':20,'height':80},
+        'models': {'x':None,'y':'ior1','width':'ampli','height':None},
+        'model_scales': {'x':0,'y':-50,'width':1,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
@@ -17,34 +17,33 @@ draw_components = {
     },
     'comp2':{
         'caller':'drawRect',
-        'init_pars': {'x':200,'y':0,'width':20,'height':80},
+        'init_pars': {'x':300,'y':100,'width':20,'height':80},
         'models': {'x':None,'y':'ior10','width':None,'height':None},
-        'model_scales': {'x':0,'y':50,'width':0,'height':0},
+        'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_1','func':'setChecked','model':'ior10'},
-        'linked_widget':'taurusValueCheckBox_2.setChecked',
+        'linked_widget':{'widget':'taurusValueCheckBox_2','func':'setChecked','model':'ior10'},
     },
     'comp3':{
         'caller':'drawRect',
-        'init_pars': {'x':400,'y':0,'width':20,'height':80},
+        'init_pars': {'x':500,'y':100,'width':20,'height':80},
         'models': {'x':None,'y':'ior11','width':None,'height':None},
-        'model_scales': {'x':0,'y':50,'width':0,'height':0},
+        'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_1','func':'setChecked','model':'ior11'},
+        'linked_widget':{'widget':'taurusValueCheckBox_3','func':'setChecked','model':'ior11'},
     },
     'comp4':{
         'caller':'drawRect',
-        'init_pars': {'x':600,'y':0,'width':20,'height':80},
+        'init_pars': {'x':700,'y':100,'width':20,'height':80},
         'models': {'x':None,'y':'ior12','width':None,'height':None},
-        'model_scales': {'x':0,'y':50,'width':0,'height':0},
+        'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_1','func':'setChecked','model':'ior12'},
+        'linked_widget':{'widget':'taurusValueCheckBox_4','func':'setChecked','model':'ior12'},
     },
 }
 
@@ -52,35 +51,29 @@ class MouseTracker(TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
     #multi models
-    modelKeys = ['ior1','ior10', 'ior11','ior12']
+    modelKeys = ['ampli','ior1','ior10', 'ior11','ior12']
     def __init__(self, parent=None, shape_config = draw_components):
         super().__init__(parent)
-        # self.initUI()
         self.shape_config = self._check_shape(shape_config)
         self.setMouseTracking(True)
-        # self.rgb = [(100,100,100)]*4
-        # self.length_hoz = 20
-        # self.length_ver = 80
-        # self.origin_x = 100
-        # self.origin_x_offset = 200
-        # self.origin_y = 100
-        # self.origin_y_offset = [0,0,0,0]
         self.cursorCheck.connect(self.checkCursorPos)
-        # self.label = None
-        # self.checkBox = None
-        # self.lineStyle = [Qt.SolidLine]*4
+        self.setModel('sys/tg_test/1/ampli', key = 'ampli')
         self.setModel('ioregister/sis3610in_eh/1/SimulationMode', key = 'ior1')
         self.setModel('ioregister/sis3610in_eh/10/SimulationMode', key = 'ior10')
         self.setModel('ioregister/sis3610in_eh/11/SimulationMode', key = 'ior11')
         self.setModel('ioregister/sis3610in_eh/12/SimulationMode', key = 'ior12')
 
+    def setLabel(self, label):
+        self.label = label
+
     def _check_shape(self, shape):
         for each in shape:
-            models = [model for model in each['models'] if model!=None]
-            if len(models)>1:
-                raise Exception('You are allowed to attach maximum one model to each shape component.')
-            if len(models)==1:
-                if models[0] not in self.modelKeys:
+            models = [model for model in shape[each]['models'].values() if model!=None]
+            print(models)
+            # if len(models)>1:
+                # raise Exception('You are allowed to attach maximum one model to each shape component.')
+            for model in models:
+                if model not in self.modelKeys:
                     raise Exception('The specified model key in the shape component does not match the class properties modelKeys.')
         return shape
 
@@ -96,44 +89,19 @@ class MouseTracker(TaurusWidget):
             for each in self.shape_config:
                 self.shape_config[each]['rgb'] = (100, 100, 100)
                 self.shape_config[each]['lineStyle'] = Qt.SolidLine
-            #self.rgb = [(100, 100, 100)]*4
-            #self.lineStyle = [Qt.SolidLine]*4
             self.update()
         
     def handleEvent(self, e_s, e_t, e_v):
         self.update()
-        '''
-        for i in range(len(self.modelKeys)):
-            if e_s is self.getModelObj(key = self.modelKeys[i]):
-                if e_v.rvalue:
-                    self.origin_y_offset[i] = 0
-                else:
-                    self.origin_y_offset[i] = 50
-        self.update()     
-        '''   
 
     def paintEvent(self, e) -> None:
         qp = QPainter()
         qp.begin(self)
         #x ray beam simulation
-        qp.setPen(QPen(QColor(255,0,0), 1, Qt.SolidLine))
-        qp.drawLine(10, self.origin_y+50, self.origin_x+2000, self.origin_y+50)
-
-        # qp.setPen(QPen(QColor(*self.rgb[i]), 2, self.lineStyle[i]))
-        # qp.setBrush(QColor(0,150,0))
+        qp.setPen(QPen(QColor(255,0,0), 3, Qt.SolidLine))
+        qp.drawLine(10, 90, 2100, 90)
         self._drawComponents(qp)
         qp.end()
-
-        '''
-        for i in range(len(self.origin_y_offset)):
-            qp.setPen(QPen(QColor(250, 250, 250), 1, Qt.SolidLine, Qt.FlatCap, Qt.MiterJoin))
-            qp.setFont(QFont('Decorative', 12))
-            qp.drawText(self.origin_x+self.origin_x_offset*i-20,self.origin_y+self.length_ver +20, f'Absorber {i+1}')
-            qp.setPen(QPen(QColor(*self.rgb[i]), 2, self.lineStyle[i]))
-            qp.setBrush(QColor(0,150,0))
-            qp.drawRect(self.origin_x+self.origin_x_offset*i,self.origin_y-self.origin_y_offset[i],self.length_hoz,self.length_ver)
-        qp.end()
-        '''
 
     def _drawComponents(self, qp):
         for each_comp in self.shape_config:
@@ -156,7 +124,7 @@ class MouseTracker(TaurusWidget):
             self.shape_config[each_comp]['final_pars'] = final_pars
             qp.setPen(QPen(QColor(*each['rgb']), 2, each['lineStyle']))
             qp.setBrush(QColor(0,150,0))
-            getattr(qp, caller)(**final_pars)
+            getattr(qp, caller)(*final_pars.values())
 
     def mouseMoveEvent(self, event):
         if self.label !=None:
@@ -185,34 +153,30 @@ class MouseTracker(TaurusWidget):
             return True
         return False
 
-    def mousePressEvent_old(self, event):
-        if event.button() == Qt.LeftButton:
-            on, which = self._check_bounds(event.x(), event.y())
-            if on:
-                value = self.getModelObj(key = self.modelKeys[which]).rvalue
-                self.getModelObj(key = self.modelKeys[which]).write(not value)
-                getattr(self.holder, 'taurusValueCheckBox_{}'.format(which+1)).setChecked(not value)
-            
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             on, which = self.check_bounds(event.x(), event.y())
             if on:
                 model_key = None
-                model_keys = [each for each in self.shape_config[which]['models'] if each != None]
+                model_keys = [each for each in self.shape_config[which]['models'].values() if each != None]
                 if len(model_keys)==0:
                     return # not linked to any model, thus a static component
-                elif len(model_keys)==1:
-                    model_key = model_keys[0]
-                    value = self.getModelObj(key = model_key).rvalue
-                    self.getModelObj(key = self.modelKeys[which]).write(not value)
-                    #update widget
-                    model_widget = self.shape_config[which]['linked_widget']['model']
-                    widget = self.shape_config[which]['linked_widget']['widget']
-                    func = self.shape_config[which]['linked_widget']['func']
-                    widget_obj = getattr(self.holder, widget)
-                    getattr(widget_obj, func)(self.getModelObj(key = model_widget).rvalue)
                 else:
-                    pass# a graphic component can be linked to multi model. if so, implement the logic here.
+                    for model_key in model_keys:
+                        value = self.getModelObj(key = model_key).rvalue
+                        if type(value)==bool:
+                            #left click will only map to a boolian attribute
+                            self.getModelObj(key = model_key).write(not value)
+                        else:
+                            pass
+                #update widget
+                model_widget = self.shape_config[which]['linked_widget']['model']
+                widget = self.shape_config[which]['linked_widget']['widget']
+                func = self.shape_config[which]['linked_widget']['func']
+                assert hasattr(self.holder, widget),'widget object not existing in the holder frame'
+                assert (model_widget in self.modelKeys),'unregistered model object'
+                widget_obj = getattr(self.holder, widget)
+                getattr(widget_obj, func)(self.getModelObj(key = model_widget).rvalue)
                 
 if __name__ == '__main__':
     import sys
