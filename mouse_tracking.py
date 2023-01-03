@@ -11,39 +11,103 @@ draw_components = {
         'models': {'x':None,'y':'ior1','width':'ampli','height':None},
         'model_scales': {'x':0,'y':-50,'width':1,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
+        'text':{'text':'motor1','pos':'top'},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
+        'paint': (0,150,0), 
+        'clickable': True,
         'linked_widget':{'widget':'taurusValueCheckBox_1','func':'setChecked','model':'ior1'},
     },
     'comp2':{
         'caller':'drawRect',
         'init_pars': {'x':300,'y':100,'width':20,'height':80},
-        'models': {'x':None,'y':'ior10','width':None,'height':None},
+        'models': {'x':None,'y':'ior2','width':None,'height':None},
         'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
+        'text':{'text':'motor2','pos':'top'},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_2','func':'setChecked','model':'ior10'},
+        'paint': (0,150,0), 
+        'clickable': True,
+        'linked_widget':{'widget':'taurusValueCheckBox_2','func':'setChecked','model':'ior2'},
     },
     'comp3':{
         'caller':'drawRect',
         'init_pars': {'x':500,'y':100,'width':20,'height':80},
-        'models': {'x':None,'y':'ior11','width':None,'height':None},
+        'models': {'x':None,'y':'ior3','width':None,'height':None},
         'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
+        'text':{'text':'motor3','pos':'top'},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_3','func':'setChecked','model':'ior11'},
+        'paint': (0,150,0), 
+        'clickable': True,
+        'linked_widget':{'widget':'taurusValueCheckBox_3','func':'setChecked','model':'ior3'},
     },
     'comp4':{
         'caller':'drawRect',
         'init_pars': {'x':700,'y':100,'width':20,'height':80},
-        'models': {'x':None,'y':'ior12','width':None,'height':None},
+        'models': {'x':None,'y':'ior2','width':None,'height':None},
         'model_scales': {'x':0,'y':-50,'width':0,'height':0},
         'final_pars': {'x':0,'y':0,'width':20,'height':80},
+        'text':{'text':'motor2','pos':'top'},
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
-        'linked_widget':{'widget':'taurusValueCheckBox_4','func':'setChecked','model':'ior12'},
+        'paint': (0,150,0), 
+        'clickable': True,
+        'linked_widget':{'widget':'taurusValueCheckBox_4','func':'setChecked','model':'ior2'},
+    },
+    'comp5':{
+        'caller':'drawRect',
+        'init_pars': {'x':900,'y':90,'width':20,'height':40},
+        'models': {'x':None,'y':'offset','width':None,'height':None},
+        'model_scales': {'x':0,'y':5,'width':0,'height':0},
+        'final_pars': {'x':0,'y':0,'width':20,'height':40},
+        'text':{'text':'down','pos':'bottom'},
+        'rgb': (100, 100, 100),
+        'lineStyle': Qt.SolidLine,
+        'paint': (0,150,0), 
+        'clickable': False,
+        'linked_widget':{'widget':None,'func':None,'model':None},
+    },
+    'comp6':{
+        'caller':'drawRect',
+        'init_pars': {'x':900,'y':50,'width':20,'height':40},
+        'models': {'x':None,'y':'offset','width':None,'height':None},
+        'model_scales': {'x':0,'y':-5,'width':0,'height':0},
+        'final_pars': {'x':0,'y':0,'width':20,'height':40},
+        'text':{'text':'top','pos':'top'},
+        'rgb': (100, 100, 100),
+        'lineStyle': Qt.SolidLine,
+        'paint': (0,150,0), 
+        'clickable': False,
+        'linked_widget':{'widget':None,'func':None,'model':None},
+    },
+    'sample':{
+        'caller':'drawRect',
+        'init_pars': {'x':500,'y':350,'width':300,'height':300},
+        'models': {'x':None,'y':None,'width':None,'height':None},
+        'model_scales': {'x':5,'y':5,'width':0,'height':0},
+        'final_pars': {'x':0,'y':0,'width':20,'height':40},
+        'text':{'text':'sample on top view','pos':'top'},
+        'rgb': (100, 100, 100),
+        'lineStyle': Qt.SolidLine,
+        'paint': (150,150,150), 
+        'clickable': False,
+        'linked_widget':{'widget':None,'func':None,'model':None},
+    },
+    'footprint':{
+        'caller':'drawRect',
+        'init_pars': {'x':635,'y':485,'width':30,'height':30},
+        'models': {'x':'gx','y':'gy','width':None,'height':None},
+        'model_scales': {'x':30,'y':30,'width':0,'height':0},
+        'final_pars': {'x':0,'y':0,'width':20,'height':40},
+        'text':{'text':'beamfootprint','pos':'top'},
+        'rgb': (0, 0, 250),
+        'lineStyle': Qt.DashLine,
+        'paint': (250,0,0,180), 
+        'clickable': False,
+        'linked_widget':{'widget':None,'func':None,'model':None},
     },
 }
 
@@ -51,17 +115,21 @@ class MouseTracker(TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
     #multi models
-    modelKeys = ['ampli','ior1','ior10', 'ior11','ior12']
+    modelKeys = ['ampli','ior1','ior2', 'ior3','offset','gx', 'gy']
     def __init__(self, parent=None, shape_config = draw_components):
         super().__init__(parent)
         self.shape_config = self._check_shape(shape_config)
         self.setMouseTracking(True)
         self.cursorCheck.connect(self.checkCursorPos)
         self.setModel('sys/tg_test/1/ampli', key = 'ampli')
-        self.setModel('ioregister/sis3610in_eh/1/SimulationMode', key = 'ior1')
-        self.setModel('ioregister/sis3610in_eh/10/SimulationMode', key = 'ior10')
-        self.setModel('ioregister/sis3610in_eh/11/SimulationMode', key = 'ior11')
-        self.setModel('ioregister/sis3610in_eh/12/SimulationMode', key = 'ior12')
+        self.setModel('ioregister/iorctrl01/1/SimulationMode', key = 'ior1')
+        self.setModel('ioregister/iorctrl01/2/SimulationMode', key = 'ior2')
+        self.setModel('sys/tg_test/1/boolean_scalar', key = 'ior3')
+        self.setModel('pm/slitctrl01/2/Position', key = 'offset')
+        self.setModel('motor/motctrl01/3/Position', key = 'gx')
+        self.setModel('motor/motctrl01/4/Position', key = 'gy')
+
+        # self.setModel('ioregister/sis3610in_eh/12/SimulationMode', key = 'ior12')
 
     def setLabel(self, label):
         self.label = label
@@ -69,7 +137,6 @@ class MouseTracker(TaurusWidget):
     def _check_shape(self, shape):
         for each in shape:
             models = [model for model in shape[each]['models'].values() if model!=None]
-            print(models)
             # if len(models)>1:
                 # raise Exception('You are allowed to attach maximum one model to each shape component.')
             for model in models:
@@ -80,7 +147,7 @@ class MouseTracker(TaurusWidget):
     @pyqtSlot(int, int)
     def checkCursorPos(self, x, y):
         on, which = self.check_bounds(x, y)
-        if on:
+        if on and self.shape_config[which]['clickable']:
             if self.shape_config[which]['rgb']!=(255,0,0):
                 self.shape_config[which]['rgb'] = (255,0,0)
                 self.shape_config[which]['lineStyle'] = Qt.DashLine
@@ -103,6 +170,26 @@ class MouseTracker(TaurusWidget):
         self._drawComponents(qp)
         qp.end()
 
+    def _draw_grids(self, center = (0,0), grid_size = (30,30), grid_pieces = (10,10)):
+        top_left = (center[0]-grid_size[0]*grid_pieces[0]/2, center[1]-grid_size[1]*grid_pieces[1]/2)
+        hor_lines = [(top_left[0],top_left[1]+i*grid_size[1],top_left[0]+grid_pieces[0]*grid_size[0],top_left[1]+i*grid_size[1]) for i in range(int(grid_pieces[1])+1)]
+        ver_lines = [(top_left[0]+i*grid_size[0],top_left[1],top_left[0]+i*grid_size[0],top_left[1]+grid_pieces[1]*grid_size[1]) for i in range(int(grid_pieces[0])+1)]
+        return hor_lines + ver_lines
+
+    def _align_text(self, pos = {'x':0, 'y':0}, flag = 'top'):
+        #flag in ['top','bottom']
+        offset = 10
+        assert 'x' in pos and 'y' in pos, 'the pos has a wrong structure, should contain x and y key at least'
+        if flag == 'top':
+            return [pos['x'], pos['y'] - offset]
+        elif flag == 'bottom':
+            height = 0
+            if 'height' in pos:
+                height = pos['height']
+            return [pos['x'], pos['y'] + height + offset]
+        else:
+            return [pos['x'], pos['y']]
+
     def _drawComponents(self, qp):
         for each_comp in self.shape_config:
             each = self.shape_config[each_comp]
@@ -123,8 +210,16 @@ class MouseTracker(TaurusWidget):
                 final_pars[key] = init_pars[key] + value_offset
             self.shape_config[each_comp]['final_pars'] = final_pars
             qp.setPen(QPen(QColor(*each['rgb']), 2, each['lineStyle']))
-            qp.setBrush(QColor(0,150,0))
+            qp.setBrush(QColor(*each['paint']))
             getattr(qp, caller)(*final_pars.values())
+            qp.setPen(QPen(QColor(*[200,200,200]), 2, each['lineStyle']))
+            qp.drawText(*self._align_text(final_pars, flag = self.shape_config[each_comp]['text']['pos']), self.shape_config[each_comp]['text']['text'])
+            if each_comp == 'sample':
+                lines = self._draw_grids(center = (final_pars['x'] + final_pars['width']/2, final_pars['y'] + final_pars['height']/2),
+                                                   grid_size = (self.shape_config['footprint']['final_pars']['width'],self.shape_config['footprint']['final_pars']['height']), 
+                                                   grid_pieces = (int(final_pars['width']/self.shape_config['footprint']['final_pars']['width']),int(final_pars['height']/self.shape_config['footprint']['final_pars']['height'])))
+                qp.setPen(QPen(QColor(*[100,100,100]), 2, each['lineStyle']))
+                [qp.drawLine(*line) for line in lines]
 
     def mouseMoveEvent(self, event):
         if self.label !=None:
@@ -173,6 +268,8 @@ class MouseTracker(TaurusWidget):
                 model_widget = self.shape_config[which]['linked_widget']['model']
                 widget = self.shape_config[which]['linked_widget']['widget']
                 func = self.shape_config[which]['linked_widget']['func']
+                if model_widget==None:
+                    return
                 assert hasattr(self.holder, widget),'widget object not existing in the holder frame'
                 assert (model_widget in self.modelKeys),'unregistered model object'
                 widget_obj = getattr(self.holder, widget)

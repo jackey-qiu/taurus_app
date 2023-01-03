@@ -14,6 +14,21 @@ from taurus import Device
 from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, TaurusMacroExecutorWidget,createMacroExecutor,MacroExecutionWindow
 from mouse_tracking import MouseTracker
 
+#keys are the widget names, values are the associated tango model address
+models = {'taurusLed': 'motor/motctrl01/1/State',
+          'taurusLCD': 'motor/motctrl01/1/Position',
+          'taurusValueSpinBox':'motor/motctrl01/1/Position',
+          'taurusLed_2': 'motor/motctrl01/2/State',
+          'taurusLCD_2': 'motor/motctrl01/2/Position',
+          'taurusValueSpinBox_2':'motor/motctrl01/2/Position',
+          'taurusValueCheckBox_1':'ioregister/iorctrl01/1/SimulationMode',
+          'taurusValueCheckBox_2':'ioregister/iorctrl01/2/SimulationMode',
+          'taurusValueCheckBox_3':'sys/tg_test/1/boolean_scalar',
+          'taurusValueCheckBox_4':'ioregister/iorctrl01/2/SimulationMode',
+          'taurusValueSpinBox_offset':'pm/slitctrl01/2/Position',
+          'taurusValueSpinBox_gx':'motor/motctrl01/3/Position',
+          'taurusValueSpinBox_gy':'motor/motctrl01/4/Position'}
+
 class PowerMeter2(Qt.QProgressBar, TaurusBaseComponent):
     """A Taurus-ified QProgressBar with separate models for value and color"""
     # setFormat() defined by both TaurusBaseComponent and QProgressBar. Rename.
@@ -92,10 +107,15 @@ class MyMainWindow(MacroExecutionWindow):
         setattr(self.power_meter, 'holder', self)
         setattr(self.widget_drawing, 'holder', self)
         self.verticalLayout_4.addWidget(self.power_meter)
-        self.lineEdit_mot1.editingFinished.connect(self.updateParameter)
+        # self.lineEdit_mot1.editingFinished.connect(self.updateParameter)
         self.widget_drawing.setLabel(self.label_mouse_checker)
         self.pushButton_all_in.clicked.connect(self.put_down_all_absorbers)
         self.pushButton_all_out.clicked.connect(self.take_out_all_absorbers)
+        self._set_model()
+
+    def _set_model(self):
+        for widget, model in models.items():
+            getattr(self, widget).setModel(model)
 
     def put_down_all_absorbers(self):
         for i, each in enumerate(self.widget_drawing.modelKeys):

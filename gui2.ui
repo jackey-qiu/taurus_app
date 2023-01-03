@@ -69,7 +69,7 @@
                   </size>
                  </property>
                  <property name="model">
-                  <string>motor/dummy_mot_ctrl/1/State</string>
+                  <string>sys/tg_test/1/State</string>
                  </property>
                 </widget>
                </item>
@@ -146,61 +146,6 @@
                  </property>
                  <property name="model">
                   <string>motor/dummy_mot_ctrl/1/position</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_mot1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>20</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="TaurusCommandButton" name="taurusCommandButton">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>DefinePosition</string>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="Model">
-                  <string>motor/dummy_mot_ctrl/1</string>
-                 </property>
-                 <property name="Command">
-                  <string>DefinePosition</string>
-                 </property>
-                 <property name="Parameters">
-                  <stringlist>
-                   <string>5</string>
-                  </stringlist>
                  </property>
                 </widget>
                </item>
@@ -391,7 +336,7 @@
              <item>
               <widget class="TaurusValueCheckBox" name="taurusValueCheckBox_1">
                <property name="text">
-                <string>!</string>
+                <string/>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -403,7 +348,7 @@
                 <bool>false</bool>
                </property>
                <property name="model">
-                <string>ioregister/sis3610in_eh/1/SimulationMode</string>
+                <string>sys/tg_test/1/boolean_scalar</string>
                </property>
                <property name="showText">
                 <bool>false</bool>
@@ -549,6 +494,99 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>slit gap</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_offset">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="autoApply">
+                <bool>true</bool>
+               </property>
+               <property name="forcedApply">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_13">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>gx</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gx">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="model">
+                <string>motor/motctrl01/3/Position</string>
+               </property>
+               <property name="autoApply">
+                <bool>true</bool>
+               </property>
+               <property name="forcedApply">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>gy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gy">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="model">
+                <string>motor/motctrl01/4/Position</string>
+               </property>
+               <property name="autoApply">
+                <bool>true</bool>
+               </property>
+               <property name="forcedApply">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -633,18 +671,13 @@
      <x>0</x>
      <y>0</y>
      <width>984</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>TaurusCommandButton</class>
-   <extends>QPushButton</extends>
-   <header>taurus.qt.qtgui.button</header>
-  </customwidget>
   <customwidget>
    <class>QLed</class>
    <extends>QPixmapWidget</extends>
