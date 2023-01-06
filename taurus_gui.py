@@ -118,14 +118,16 @@ class MyMainWindow(MacroExecutionWindow):
             getattr(self, widget).setModel(model)
 
     def put_down_all_absorbers(self):
-        for i, each in enumerate(self.widget_drawing.modelKeys):
-            self.widget_drawing.getModelObj(key = each).write(True)
-            getattr(self, 'taurusValueCheckBox_{}'.format(i+1)).setChecked(True)
+        for each in self.widget_drawing.absorber_components:
+            widget = self.widget_drawing.shape_config[each]['linked_widget']['widget']
+            if hasattr(self, widget):
+                getattr(self, widget).setChecked(True)
 
     def take_out_all_absorbers(self):
-        for i, each in enumerate(self.widget_drawing.modelKeys):
-            self.widget_drawing.getModelObj(key = each).write(False)
-            getattr(self, 'taurusValueCheckBox_{}'.format(i+1)).setChecked(False)
+        for each in self.widget_drawing.absorber_components:
+            widget = self.widget_drawing.shape_config[each]['linked_widget']['widget']
+            if hasattr(self, widget):
+                getattr(self, widget).setChecked(False)        
 
     def _init_widget_(self):
         self.registerConfigDelegate(self.widget_sequence)

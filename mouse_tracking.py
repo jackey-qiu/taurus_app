@@ -1,8 +1,9 @@
 import sys
-from PyQt5.QtWidgets import (QApplication, QLabel, QWidget)
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QFont
+from PyQt5.QtWidgets import (QApplication, QLabel, QWidget, QMenu, QDialog, QMessageBox)
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QFont, QCursor
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 from taurus.qt.qtgui.container import TaurusWidget
+from PyQt5 import uic
 
 draw_components = {
     'comp1':{
@@ -16,6 +17,7 @@ draw_components = {
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
         'clickable': True,
+        'step_move': {'model':None, 'step':1},
         'linked_widget':{'widget':'taurusValueCheckBox_1','func':'setChecked','model':'ior1'},
     },
     'comp2':{
@@ -29,6 +31,7 @@ draw_components = {
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
         'clickable': True,
+        'step_move': {'model':None, 'step':1},
         'linked_widget':{'widget':'taurusValueCheckBox_2','func':'setChecked','model':'ior2'},
     },
     'comp3':{
@@ -42,6 +45,7 @@ draw_components = {
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
         'clickable': True,
+        'step_move': {'model':None, 'step':1},
         'linked_widget':{'widget':'taurusValueCheckBox_3','func':'setChecked','model':'ior3'},
     },
     'comp4':{
@@ -55,6 +59,7 @@ draw_components = {
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
         'clickable': True,
+        'step_move': {'model':None, 'step':1},
         'linked_widget':{'widget':'taurusValueCheckBox_4','func':'setChecked','model':'ior2'},
     },
     'comp5':{
@@ -67,8 +72,9 @@ draw_components = {
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
-        'clickable': False,
-        'linked_widget':{'widget':None,'func':None,'model':None},
+        'clickable': True,
+        'step_move': {'model':'offset', 'step':1},
+        'linked_widget':{'widget':'taurusValueSpinBox_offset','func':'setValue','model':'offset'},
     },
     'comp6':{
         'caller':'drawRect',
@@ -80,8 +86,9 @@ draw_components = {
         'rgb': (100, 100, 100),
         'lineStyle': Qt.SolidLine,
         'paint': (0,150,0), 
-        'clickable': False,
-        'linked_widget':{'widget':None,'func':None,'model':None},
+        'clickable': True,
+        'step_move': {'model':'offset', 'step':-1},
+        'linked_widget':{'widget':'taurusValueSpinBox_offset','func':'setValue','model':'offset'},
     },
     'sample':{
         'caller':'drawRect',
@@ -94,6 +101,7 @@ draw_components = {
         'lineStyle': Qt.SolidLine,
         'paint': (150,150,150), 
         'clickable': False,
+        'step_move': {'model':None, 'step':1},
         'linked_widget':{'widget':None,'func':None,'model':None},
     },
     'footprint':{
@@ -106,7 +114,8 @@ draw_components = {
         'rgb': (0, 0, 250),
         'lineStyle': Qt.DashLine,
         'paint': (250,0,0,180), 
-        'clickable': False,
+        'clickable': True,
+        'step_move': {'model':'gx', 'step':1},
         'linked_widget':{'widget':None,'func':None,'model':None},
     },
 }
@@ -116,8 +125,11 @@ class MouseTracker(TaurusWidget):
     cursorCheck = pyqtSignal(int, int)
     #multi models
     modelKeys = ['ampli','ior1','ior2', 'ior3','offset','gx', 'gy']
+    absorber_components = ['comp1','comp2', 'comp3','comp4']
     def __init__(self, parent=None, shape_config = draw_components):
         super().__init__(parent)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.popupMenu)
         self.shape_config = self._check_shape(shape_config)
         self.setMouseTracking(True)
         self.cursorCheck.connect(self.checkCursorPos)
@@ -130,6 +142,24 @@ class MouseTracker(TaurusWidget):
         self.setModel('motor/motctrl01/4/Position', key = 'gy')
 
         # self.setModel('ioregister/sis3610in_eh/12/SimulationMode', key = 'ior12')
+
+    def popupMenu(self):
+        menu = QMenu()
+        pos = QCursor.pos()
+        pos_widget = self.mapFromGlobal(pos)
+        comps = self.check_bounds(pos_widget.x(), pos_widget.y())
+        open_seting_panels = []
+        if len(comps)!=0:
+            for comp in comps:
+                open_seting_panels.append(menu.addAction('Click to set up component: {}'.format(comp)))
+        else:
+             do_nothing = menu.addAction('You clicked on the empty space')
+        action = menu.exec_(pos)   
+        if action in open_seting_panels:
+            #print('Pop up setting table!')
+            self.onClickedMenu(key = comps[open_seting_panels.index(action)])  
+        elif action == do_nothing:
+            pass 
 
     def setLabel(self, label):
         self.label = label
@@ -146,17 +176,19 @@ class MouseTracker(TaurusWidget):
 
     @pyqtSlot(int, int)
     def checkCursorPos(self, x, y):
-        on, which = self.check_bounds(x, y)
-        if on and self.shape_config[which]['clickable']:
-            if self.shape_config[which]['rgb']!=(255,0,0):
-                self.shape_config[which]['rgb'] = (255,0,0)
-                self.shape_config[which]['lineStyle'] = Qt.DashLine
-                self.update()
-        else:
-            for each in self.shape_config:
-                self.shape_config[each]['rgb'] = (100, 100, 100)
-                self.shape_config[each]['lineStyle'] = Qt.SolidLine
-            self.update()
+        whichs = self.check_bounds(x, y)
+        for which in whichs:
+            if self.shape_config[which]['clickable']:
+                if self.shape_config[which]['rgb']!=(255,0,0):
+                    self.shape_config[which]['rgb'] = (255,0,0)
+                    self.shape_config[which]['lineStyle'] = Qt.DashLine
+                    #self.update()
+        for each in self.shape_config:
+            if each not in whichs:
+                if self.shape_config[each]['clickable']:
+                    self.shape_config[each]['rgb'] = (100, 100, 100)
+                    self.shape_config[each]['lineStyle'] = Qt.SolidLine
+        self.update()
         
     def handleEvent(self, e_s, e_t, e_v):
         self.update()
@@ -235,11 +267,13 @@ class MouseTracker(TaurusWidget):
         return False, 0
 
     def check_bounds(self, x, y):
+        return_ = []
         for each in self.shape_config:
             if self.shape_config[each]['caller'] == 'drawRect':
                 if self._check_bounds_rect(x, y, self.shape_config[each]['final_pars']):
-                    return True, each
-        return False, None
+                    return_.append(each)
+        return return_
+        #return False, None
             
     def _check_bounds_rect(self, x, y, coords):
         top_left_corner = (coords['x'], coords['y'])
@@ -249,31 +283,100 @@ class MouseTracker(TaurusWidget):
         return False
 
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            on, which = self.check_bounds(event.x(), event.y())
-            if on:
-                model_key = None
-                model_keys = [each for each in self.shape_config[which]['models'].values() if each != None]
-                if len(model_keys)==0:
-                    return # not linked to any model, thus a static component
-                else:
-                    for model_key in model_keys:
-                        value = self.getModelObj(key = model_key).rvalue
-                        if type(value)==bool:
+        return_ = [each for each in self.check_bounds(event.x(), event.y()) if self.shape_config[each]['clickable']]
+        if return_==[]:
+            return
+
+        for which in return_:
+            model_key = None
+            model_keys = [each for each in self.shape_config[which]['models'].values() if each != None]
+            if len(model_keys)==0:
+                return # not linked to any model, thus a static component
+            else:
+                for model_key in model_keys:
+                    value = self.getModelObj(key = model_key).rvalue
+                    if type(value)==bool:
+                        if event.button() == Qt.LeftButton:
                             #left click will only map to a boolian attribute
                             self.getModelObj(key = model_key).write(not value)
-                        else:
-                            pass
-                #update widget
-                model_widget = self.shape_config[which]['linked_widget']['model']
-                widget = self.shape_config[which]['linked_widget']['widget']
-                func = self.shape_config[which]['linked_widget']['func']
-                if model_widget==None:
-                    return
-                assert hasattr(self.holder, widget),'widget object not existing in the holder frame'
-                assert (model_widget in self.modelKeys),'unregistered model object'
-                widget_obj = getattr(self.holder, widget)
-                getattr(widget_obj, func)(self.getModelObj(key = model_widget).rvalue)
+                    else:
+                        if model_key == self.shape_config[which]['step_move']['model']:
+                            if event.button() == Qt.LeftButton:
+                                #old_value = self.getModelObj(key = model_key).rvalue._magnitude
+                                self.getModelObj(key = model_key).write(value._magnitude + self.shape_config[which]['step_move']['step'])
+                            elif event.button() == Qt.RightButton:
+                                # print('event',event.x(),event.y())
+                                pass
+                                #self.getModelObj(key = model_key).write(value._magnitude - self.shape_config[which]['step_move']['step'])
+
+            #update widget
+            model_widget = self.shape_config[which]['linked_widget']['model']
+            widget = self.shape_config[which]['linked_widget']['widget']
+            func = self.shape_config[which]['linked_widget']['func']
+            if model_widget==None:
+                return
+            assert hasattr(self.holder, widget),'widget object not existing in the holder frame'
+            assert (model_widget in self.modelKeys),'unregistered model object'
+            widget_obj = getattr(self.holder, widget)
+            value = self.getModelObj(key = model_widget).rvalue
+            if type(value)==bool:
+                getattr(widget_obj, func)(value)
+            else:
+                getattr(widget_obj, func)(value._magnitude)
+
+    def onClickedMenu(self, key):
+        setup_dialog = setupComponent(self, self.shape_config[key], key)
+        setup_dialog.exec()
+
+class setupComponent(QDialog):
+    def __init__(self, parent=None, config_dict = {}, comp_key = None):
+        super().__init__(parent)
+        self.parent = parent
+        uic.loadUi("setup_table.ui", self)
+        self.keys_lineEdit = []
+        self.comp_key = comp_key
+        self.load_config(config_dict)
+        self.pushButton_update.clicked.connect(self.update_config)
+
+    def load_config(self, config):
+        self.keys_lineEdit = []
+        self.lineEdit_key.setText(self.comp_key)
+        for key, value in config.items():
+            if hasattr(self, 'lineEdit_{}'.format(key)):
+                getattr(self, 'lineEdit_{}'.format(key)).setText(str(value))
+                self.keys_lineEdit.append('lineEdit_{}'.format(key))
+
+    def update_config(self):
+        try:
+            config_dict = {}
+            for each in self.keys_lineEdit:
+                if each=='lineEdit_caller':
+                    config_dict['caller'] = getattr(self, each).text()
+                else:
+                    config_dict[each[9:]] = eval(getattr(self, each).text())
+            original_dict = self.parent.shape_config[self.comp_key]
+            original_dict.update(config_dict)
+            self.parent.shape_config[self.comp_key] = original_dict
+            self.parent.update()
+            info_pop_up('Succed to update pars. Close the dialog to continue on!','Information')
+        except Exception as e:
+            info_pop_up('Fail to update pars. Error:{}'.format(str(e)), 'Error')
+
+def info_pop_up(msg_text = 'error', window_title = ['Error','Information','Warning'][0]):
+    msg = QMessageBox()
+    if window_title == 'Error':
+        msg.setIcon(QMessageBox.Critical)
+    elif window_title == 'Warning':
+        msg.setIcon(QMessageBox.Warning)
+    else:
+        msg.setIcon(QMessageBox.Information)
+
+    msg.setText(msg_text)
+    # msg.setInformativeText('More information')
+    msg.setWindowTitle(window_title)
+    msg.exec_()
+
+    
                 
 if __name__ == '__main__':
     import sys
