@@ -1,9 +1,10 @@
 import sys
 from PyQt5.QtWidgets import (QApplication, QLabel, QWidget, QMenu, QDialog, QMessageBox)
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QFont, QCursor
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QFont, QCursor, QPainterPath,QTransform
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 from taurus.qt.qtgui.container import TaurusWidget
 from PyQt5 import uic
+import numpy as np
 
 draw_components = {
     'comp1':{
@@ -193,9 +194,17 @@ class MouseTracker(TaurusWidget):
     def handleEvent(self, e_s, e_t, e_v):
         self.update()
 
+
+    def _new_point_after_rotation(self, x, y, deg):
+        deg = np.deg2rad(deg)
+        x_new = np.cos(deg)*x - np.sin(deg)*y
+        y_new = np.sin(deg)*x + np.cos(deg)*y
+        return x_new, y_new
+
     def paintEvent(self, e) -> None:
         qp = QPainter()
         qp.begin(self)
+
         #x ray beam simulation
         qp.setPen(QPen(QColor(255,0,0), 3, Qt.SolidLine))
         qp.drawLine(10, 90, 2100, 90)
@@ -334,6 +343,7 @@ class setupComponent(QDialog):
         self.parent = parent
         uic.loadUi("setup_table.ui", self)
         self.keys_lineEdit = []
+        self.comp_key = comp_key
         self.comp_key = comp_key
         self.load_config(config_dict)
         self.pushButton_update.clicked.connect(self.update_config)
