@@ -341,7 +341,7 @@ class setupComponent(QDialog):
     def __init__(self, parent=None, config_dict = {}, comp_key = None):
         super().__init__(parent)
         self.parent = parent
-        uic.loadUi("setup_table.ui", self)
+        uic.loadUi("setup_table_gui.ui", self)
         self.keys_lineEdit = []
         self.comp_key = comp_key
         self.comp_key = comp_key

@@ -6,16 +6,21 @@ import xml.etree.ElementTree as ET
 from taurus.qt.qtgui.container import TaurusWidget
 import re
 
-svg_file = "C:\\Users\\qiucanro\\apps\\taurus_app\\resources\\svg\\synoptic_view_1.svg"
-
 class SynopticWidget(QSvgWidget, TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
-    modelKeys = ['ampli','ior1','ior2', 'ior3','offset','gx', 'gy','mot1']
+    modelKeys = []
 
-    def __init__(self, parent=None, svg_file = svg_file):
+    def __init__(self, parent=None):
         super(SynopticWidget, self).__init__(parent = parent)
-        self.svg_file = svg_file
+
+    def run_init(self, config):
+        #supposed to be called inside main gui
+        #config is a dict with keys of svg_file, model and hover_style
+        self.svg_file = config['svg_file']
+        self.hover_style = config['hover_style']
+        self.model_list = config['model']
+        self.modelKeys = list(set(self.modelKeys + list(config['model'].keys())))
         self.tree = ET.parse(self.svg_file)
         self._init_actions()
         #signal slot connection
@@ -25,7 +30,7 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
     def _init_actions(self):
         self._init_svg()
         self._get_ids_from_svg()
-        self._set_style_model_when_hovered('stroke:#FF0000')
+        self._set_style_model_when_hovered()
         self._set_init_transform()
         self.set_tango_models()
         self.reload_svg()
@@ -33,24 +38,18 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         self.last_clicked_shapes_id= []
 
     def set_tango_models(self):
-        self.setModel('sys/tg_test/1/ampli', key = 'ampli')
-        self.setModel('ioregister/iorctrl01/1/SimulationMode', key = 'ior1')
-        self.setModel('ioregister/iorctrl01/2/SimulationMode', key = 'ior2')
-        self.setModel('sys/tg_test/1/boolean_scalar', key = 'ior3')
-        self.setModel('pm/slitctrl01/2/Position', key = 'offset')
-        self.setModel('motor/motctrl01/3/Position', key = 'gx')
-        self.setModel('motor/motctrl01/4/Position', key = 'gy')
-        self.setModel('motor/motctrl01/1/Position',key='mot1')
+        for key, model in self.model_list.items():
+            self.setModel(model, key = key)
 
     def update_style_when_hovered(self, id):
         style = self._get_element_with_id(id).get('style_model_when_hovered')
         if style!=None:
             self.update_xml_tree(id, {'style':style})
 
-    def _set_style_model_when_hovered(self, style):
+    def _set_style_model_when_hovered(self):
         for id in self.ids_shape:
             if self._get_element_with_id(id).get('style_model_when_hovered') == None:
-                self._get_element_with_id(id).set('style_model_when_hovered', style)
+                self._get_element_with_id(id).set('style_model_when_hovered', self.hover_style)
 
     def _set_init_transform(self):
         for id in self.ids_shape:

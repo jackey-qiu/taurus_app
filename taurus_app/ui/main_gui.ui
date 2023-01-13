@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1407</width>
-    <height>923</height>
+    <width>1440</width>
+    <height>847</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -632,9 +632,67 @@
         <attribute name="title">
          <string>test_synoptic</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
-          <widget class="SynopticWidget" name="widget_synopic_test" native="true"/>
+          <widget class="QSplitter" name="splitter_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <item>
+              <widget class="QScrollArea" name="scrollArea">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>300</height>
+                </size>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
+               <property name="widgetResizable">
+                <bool>false</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaWidgetContents">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>1169</width>
+                  <height>209</height>
+                 </rect>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="cadWidget" name="widget_cad" native="true"/>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QFrame" name="frame_3">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="SynopticWidget" name="widget_synopic_test" native="true"/>
+             </item>
+            </layout>
+           </widget>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -712,8 +770,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1407</width>
-     <height>21</height>
+     <width>1440</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -790,6 +848,12 @@
    <class>SynopticWidget</class>
    <extends>QWidget</extends>
    <header>synoptic.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>cadWidget</class>
+   <extends>QWidget</extends>
+   <header>taurus_app.custom_widgets.CAD_drawing_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

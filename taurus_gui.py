@@ -1,120 +1,35 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import uic
-from taurus.qt.qtgui.container import TaurusMainWindow
-import qdarkstyle
-from taurus.qt.qtgui.input import TaurusValueLineEdit
-# from py_gui2 import Ui_MainWindow
-from PyQt5.QtCore import QCoreApplication 
-from taurus.external.qt import Qt
-from taurus.qt.qtgui.base import TaurusBaseComponent
-from taurus.qt.qtgui.application import TaurusApplication
-import sardana
 from taurus import Device
-from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, TaurusMacroExecutorWidget,createMacroExecutor,MacroExecutionWindow
-from mouse_tracking import MouseTracker
-
-#keys are the widget names, values are the associated tango model address
-models = {'taurusLed': 'motor/motctrl01/1/State',
-          'taurusLCD': 'motor/motctrl01/1/Position',
-          'taurusValueSpinBox':'motor/motctrl01/1/Position',
-          'taurusLed_2': 'motor/motctrl01/2/State',
-          'taurusLCD_2': 'motor/motctrl01/2/Position',
-          'taurusValueSpinBox_2':'motor/motctrl01/2/Position',
-          'taurusValueCheckBox_1':'ioregister/iorctrl01/1/SimulationMode',
-          'taurusValueCheckBox_2':'ioregister/iorctrl01/2/SimulationMode',
-          'taurusValueCheckBox_3':'sys/tg_test/1/boolean_scalar',
-          'taurusValueCheckBox_4':'ioregister/iorctrl01/2/SimulationMode',
-          'taurusValueSpinBox_offset':'pm/slitctrl01/2/Position',
-          'taurusValueSpinBox_gx':'motor/motctrl01/3/Position',
-          'taurusValueSpinBox_gy':'motor/motctrl01/4/Position'}
-
-class PowerMeter2(Qt.QProgressBar, TaurusBaseComponent):
-    """A Taurus-ified QProgressBar with separate models for value and color"""
-    # setFormat() defined by both TaurusBaseComponent and QProgressBar. Rename.
-    setFormat = TaurusBaseComponent.setFormat
-    setBarFormat = Qt.QProgressBar.setFormat
-
-    modelKeys = ["power", "color"]  # support 2 models (default key is "power")
-    _template = "QProgressBar::chunk {background: %s}"  # stylesheet template
-
-    def __init__(self, parent=None, value_range=(0, 100)):
-        super(PowerMeter2, self).__init__(parent=parent)
-        self.parent = parent
-        self.setOrientation(Qt.Qt.Vertical)
-        self.setRange(*value_range)
-        self.setTextVisible(False)
-        self.setModel("eval:Q(60+20*rand())")  # implicit use of  key="power"
-        self.setModel("eval:['green','red','blue'][randint(3)]", key='color')
-
-    def handleEvent(self, evt_src, evt_type, evt_value):
-        """reimplemented from TaurusBaseComponent"""
-        try:
-            if evt_src is self.getModelObj(key="power"):
-                self.setValue(int(evt_value.rvalue.m))
-            elif evt_src is self.getModelObj(key="color"):
-                if hasattr(self,'holder'):
-                    if self.holder.taurusLCD.value()>50:
-                        self.setStyleSheet(self._template % 'red')
-                    else:
-                        self.setStyleSheet(self._template % 'green')
-                else:
-                    self.setStyleSheet(self._template % evt_value.rvalue)
-        except Exception as e:
-            self.info("Skipping event. Reason: %s", e)
-
-
-class PowerMeter(Qt.QProgressBar, TaurusBaseComponent):
-    """A Taurus-ified QProgressBar"""
-
-    # setFormat() defined by both TaurusBaseComponent and QProgressBar. Rename.
-    setFormat = TaurusBaseComponent.setFormat
-    setBarFormat = Qt.QProgressBar.setFormat
-
-    def __init__(self, parent=None, value_range=(0, 100)):
-        super(PowerMeter, self).__init__(parent=parent)
-        self.holder = None
-        self.setOrientation(Qt.Qt.Vertical)
-        self.setRange(*value_range)
-        self.setTextVisible(False)
-        self.setModel("eval:Q(60+20*rand())")
-        self.setStyleSheet("QProgressBar::chunk {background: red}")
-
-    def handleEvent(self, evt_src, evt_type, evt_value):
-        """reimplemented from TaurusBaseComponent"""
-        try:
-            self.setValue(int(evt_value.rvalue.m))
-        except Exception as e:
-            self.info("Skipping event. Reason: %s", e)
-
-class CustomLineEdit(TaurusValueLineEdit):
-    def __init__(self):
-        super(CustomLineEdit, self).__init__()
-        self.setModel("motor/dummy_mot_ctrl/1/position")
+from taurus.qt.qtgui.container import TaurusMainWindow
+from taurus.qt.qtgui.application import TaurusApplication
+import taurus_app.config.synoptic_config as synoptic_config
+from taurus_app.config.widget_model_config import widget_models
+from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, MacroExecutionWindow
 
 class MyMainWindow(MacroExecutionWindow):
     def __init__(self, parent=None, designMode=False):
         MacroExecutionWindow.__init__(self, parent, designMode)
-        uic.loadUi('gui2.ui', self)
+        uic.loadUi('main_gui.ui', self)
         self._init_widget_()
         self._qDoor = None
         self.doorChanged.connect(self.onDoorChanged)
-        # self.loadSettings()
         TaurusMainWindow.loadSettings(self)
         self.doorChanged.emit(self.doorName())
         self.widget_terminal.update_name_space('main_gui',self)
-        self.power_meter = PowerMeter2()
+        '''
+        self.power_meter = PowerMeter()
         setattr(self.power_meter, 'holder', self)
+        '''
         setattr(self.widget_drawing, 'holder', self)
         self.verticalLayout_4.addWidget(self.power_meter)
-        # self.lineEdit_mot1.editingFinished.connect(self.updateParameter)
         self.widget_drawing.setLabel(self.label_mouse_checker)
         self.pushButton_all_in.clicked.connect(self.put_down_all_absorbers)
         self.pushButton_all_out.clicked.connect(self.take_out_all_absorbers)
         self._set_model()
 
     def _set_model(self):
-        for widget, model in models.items():
+        for widget, model in widget_models.items():
             getattr(self, widget).setModel(model)
 
     def put_down_all_absorbers(self):
@@ -156,20 +71,6 @@ class MyMainWindow(MacroExecutionWindow):
             self.widget_sequence.onMacroStatusUpdated)
         self.widget_sequence.onDoorChanged(doorName)
 
-    def onDoorChanged_old(self, doorName):
-        MacroExecutionWindow.onDoorChanged(self, doorName)
-        if self._qDoor:
-            print('sensor1')
-            self._qDoor.macroStatusUpdated.disconnect(
-                self.widget_sequence.onMacroStatusUpdated)
-        if doorName == "":
-            return
-        self._qDoor = Device(doorName)
-        self._qDoor.macroStatusUpdated.connect(
-            self.widget_sequence.onMacroStatusUpdated)
-        self.widget_sequence.onDoorChanged(doorName)
-        # self.widget_sequence.setModel('p25/macroserver/hase027tngtest.01')
-
     def setModel(self, model):
         MacroExecutionWindow.setModel(self, model)
         self.widget_sequence.setModel(model)
@@ -180,6 +81,8 @@ class MyMainWindow(MacroExecutionWindow):
 if __name__ == "__main__":
     from taurus.core.util import argparse
     from taurus.qt.qtgui.application import TaurusApplication
+    import qdarkstyle
+    import sardana
 
     parser = argparse.get_taurus_parser()
     parser.set_usage("%prog [options]")
@@ -193,6 +96,9 @@ if __name__ == "__main__":
     app.setOrganizationName("DESY")
     myWin = MyMainWindow()
     TaurusMainWindow.loadSettings(myWin)
+    #setup synotic widget
+    for widget in synoptic_config.synoptic['widget_name']:
+        getattr(myWin, widget).run_init(synoptic_config.prepare_config(widget))
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     myWin.show()
     sys.exit(app.exec_())
