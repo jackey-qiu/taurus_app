@@ -11,21 +11,24 @@ svg_file = "C:\\Users\\qiucanro\\apps\\taurus_app\\resources\\svg\\synoptic_view
 class SynopticWidget(QSvgWidget, TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
-    #multi models
     modelKeys = ['ampli','ior1','ior2', 'ior3','offset','gx', 'gy','mot1']
+
     def __init__(self, parent=None, svg_file = svg_file):
         super(SynopticWidget, self).__init__(parent = parent)
         self.svg_file = svg_file
         self.tree = ET.parse(self.svg_file)
-        self.init_svg()
+        self._init_actions()
+        #signal slot connection
+        self.setMouseTracking(True)
+        self.cursorCheck.connect(self.checkCursorPos)
+
+    def _init_actions(self):
+        self._init_svg()
         self._get_ids_from_svg()
         self._set_style_model_when_hovered('stroke:#FF0000')
         self._set_init_transform()
         self.set_tango_models()
         self.reload_svg()
-        #signal slot connection
-        self.setMouseTracking(True)
-        self.cursorCheck.connect(self.checkCursorPos)
         self.style_box = self._get_init_styles()
         self.last_clicked_shapes_id= []
 
@@ -43,7 +46,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         style = self._get_element_with_id(id).get('style_model_when_hovered')
         if style!=None:
             self.update_xml_tree(id, {'style':style})
-
 
     def _set_style_model_when_hovered(self, style):
         for id in self.ids_shape:
@@ -104,13 +106,11 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         self.ids_shape = ids_
 
     def _update_model_move_to_svg(self, id):
-        #model_move_string eg. "translate(<old_1>+<offset>*1,<old_2>);rotate(int(<offset>),<old_2>,<old_3>)"
-                            #return translate(<old_value>+<offset model value>*1,translate_y:int(<offset model value>))
         search_pattern = {
                           'translate':"translate\((\-?\d+\.?\d*),(\-?\d+\.?\d*)\)",#get ('20', '30')' in 'translate(20,30)'
                           'rotate':"rotate\((\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*)\)",#get ('10', '20', '30') in 'rotate(10,20,30)'
                           }
-
+        #model_move_string eg. "translate(<old_1>+<offset>*1,<old_2>);rotate(int(<offset>),<old_2>,<old_3>)"
         model_move_string = self._get_element_with_id(id).get('model_move')
         transform_attribute = self._get_element_with_id(id).get('transform')
         if model_move_string==None or transform_attribute==None:
@@ -119,7 +119,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             #remove all empty spaces
             model_move_string = model_move_string.replace(' ', '')
             transform_attribute = transform_attribute.replace(' ','')
-
         moves = model_move_string.rstrip().rsplit(';')
         for i,move in enumerate(moves):
             move_updated = move
@@ -148,13 +147,13 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
                         value = int(value)
                 #replace the model tag with the assiciated model values
                 move_updated = move_updated.replace('<{}>'.format(each_model), str(value))
+            #move_updated_items eg (('translate','(0,2*3)'))
             move_updated_items = re.findall("(translate|rotate)(\(.*\))",move_updated)[0]
             # do some evaluation for some math equation eg. 2*3 --> 6, since svg is not happy about math symbol
             move_updated = move_updated_items[0] + str(eval(move_updated_items[1]))
             moves[i] = move_updated
         self._get_element_with_id(id).set('transform',''.join(moves))
         return ''.join(moves)
-
 
     def _cursor_on_which_component(self, cx, cy):
         ids_cursor_on = []
@@ -196,14 +195,11 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             for key, value in modifier_dict.items():
                 if key!='text':
                     if key!='style':
-                        # print('setting {} to {}'.format(key, value))
                         temp_.set(key, str(value))
                     else:#if key is style
                         value = _update_style_attrib(temp_.get('style'), value)
-                        # print('setting {} to {}'.format(key, value))
                         temp_.set(key, str(value))
                 else:
-                    # print('setting {} to {}'.format(key, value))
                     temp_.text = str(value)
         self.reload_svg()
 
@@ -216,7 +212,7 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         self.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
         self.show()
 
-    def init_svg(self):#only called in init
+    def _init_svg(self):#only called in init
         self.svg_bytes = bytearray(ET.tostring(self.tree.getroot()).decode(), encoding='utf-8')
         self.load(self.svg_bytes)
         self.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
@@ -232,7 +228,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         if len(pos_ids)!=0:
             self.last_clicked_shapes_id = pos_ids
             [self.update_style_when_hovered(each) for each in pos_ids]
-            print(pos_ids)
         else:
             for each in self.last_clicked_shapes_id:
                 self._get_element_with_id(each).set('style', self.style_box[each])
@@ -253,10 +248,3 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             scale = height/height_vb
             delta_x = (width - width_vb*scale)/2
             return (x-delta_x)/scale, y/scale
-
-
-
-
-
-    
-        
