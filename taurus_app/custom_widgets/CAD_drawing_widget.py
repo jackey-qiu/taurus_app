@@ -10,6 +10,7 @@ class cadWidget(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent)
         self.img = None
+        self.img_ratio_original = None
         self.run_init(config)
 
     def run_init(self, config):
@@ -25,9 +26,25 @@ class cadWidget(QWidget):
     def _draw_image(self, pq):
         image = imageio.imread(self.img)
         image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
+        if self.img_ratio_original==None:
+            self.img_ratio_original = image.shape[1]/image.shape[0]
         image = cv2.resize(image, dsize=self.img_resize, interpolation=cv2.INTER_CUBIC)
         im = QImage(image,image.shape[1],image.shape[0], image.shape[1] * 3, QImage.Format_BGR888)
         pq.drawImage(0, 0, im)
+
+    def _set_img_dim_upon_resize(self):
+        #we would like to keep the img_ratio
+        view_box_ratio = self.width()/self.height()
+        if view_box_ratio >= self.img_ratio_original:
+            self.img_resize = (int(self.img_ratio_original*self.height()),int(self.height()))
+        else:
+            self.img_resize = (int(self.width()),int(self.width()/self.img_ratio_original))
+
+    def resizeEvent(self, e):
+        if self.img_ratio_original==None:
+            return
+        self._set_img_dim_upon_resize()
+        self.update()
 
     def _draw_rect(self, pq, dim, id):
         self.pq.drawRect(*dim)

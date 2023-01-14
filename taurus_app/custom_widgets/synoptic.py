@@ -9,7 +9,7 @@ import re
 class SynopticWidget(QSvgWidget, TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
-    modelKeys = []
+    modelKeys = ['gx', 'gy', 'ior3', 'offset', 'ior1', 'mot1', 'ior2']
 
     def __init__(self, parent=None):
         super(SynopticWidget, self).__init__(parent = parent)
@@ -20,12 +20,17 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         self.svg_file = config['svg_file']
         self.hover_style = config['hover_style']
         self.model_list = config['model']
-        self.modelKeys = list(set(self.modelKeys + list(config['model'].keys())))
+        self.update_model_keys(list(config['model'].keys()))
         self.tree = ET.parse(self.svg_file)
         self._init_actions()
         #signal slot connection
         self.setMouseTracking(True)
         self.cursorCheck.connect(self.checkCursorPos)
+
+    @classmethod
+    def update_model_keys(cls, key_list):
+         cls.modelKeys = list(set(cls.modelKeys + key_list))
+         print(cls.modelKeys)
 
     def _init_actions(self):
         self._init_svg()

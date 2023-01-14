@@ -18,7 +18,7 @@ import pyqtgraph as pg
 
 # print('post 2a')
 from taurus.core.taurusmanager import TaurusManager
-from setBufferTool import BufferTool
+from .setBufferTool import BufferTool
 
 # print('post 3a')
 taurusM = TaurusManager()

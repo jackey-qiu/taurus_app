@@ -5,7 +5,7 @@ from pyqtgraph import GraphicsLayoutWidget, ImageItem
 import pyqtgraph as pg
 from taurus.qt.qtgui.tpg import ForcedReadTool
 from taurus.core import TaurusEventType, TaurusTimeVal
-from showOrHide import VisuaTool
+from .showOrHide import VisuaTool
 
 class CumForcedReadTool(ForcedReadTool):
     def __init__(self,*args, **kwargs) -> None:

@@ -2,7 +2,7 @@ import sys
 import numpy
 from taurus.qt.qtgui.application import TaurusApplication
 from taurus.qt.qtgui.tpg import TaurusPlotDataItem
-from setBufferTool import BufferTool
+from .setBufferTool import BufferTool
 
 import pyqtgraph as pg
 

@@ -6,11 +6,14 @@ from taurus.qt.qtgui.application import TaurusApplication
 import taurus_app.config.synoptic_config as synoptic_config
 from taurus_app.config.widget_model_config import widget_models
 from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, MacroExecutionWindow
+from pathlib import Path
+
+main_gui = str(Path(__file__).parent / "taurus_app" / "ui" / "main_gui.ui")
 
 class MyMainWindow(MacroExecutionWindow):
     def __init__(self, parent=None, designMode=False):
         MacroExecutionWindow.__init__(self, parent, designMode)
-        uic.loadUi('main_gui.ui', self)
+        uic.loadUi(main_gui, self)
         self._init_widget_()
         self._qDoor = None
         self.doorChanged.connect(self.onDoorChanged)
@@ -22,7 +25,7 @@ class MyMainWindow(MacroExecutionWindow):
         setattr(self.power_meter, 'holder', self)
         '''
         setattr(self.widget_drawing, 'holder', self)
-        self.verticalLayout_4.addWidget(self.power_meter)
+        # self.verticalLayout_4.addWidget(self.power_meter)
         self.widget_drawing.setLabel(self.label_mouse_checker)
         self.pushButton_all_in.clicked.connect(self.put_down_all_absorbers)
         self.pushButton_all_out.clicked.connect(self.take_out_all_absorbers)
