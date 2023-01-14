@@ -99,9 +99,8 @@ if __name__ == "__main__":
     app.setOrganizationName("DESY")
     myWin = MyMainWindow()
     TaurusMainWindow.loadSettings(myWin)
-    #setup synotic widget
-    for widget in synoptic_config.synoptic['widget_name']:
-        getattr(myWin, widget).run_init(synoptic_config.prepare_config(widget))
+    #setup synotic widget: use the first frame at the beginning
+    myWin.widget_synopic.run_init(synoptic_config.prepare_config(synoptic_config.synoptic['frame'][0]))
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     myWin.show()
     sys.exit(app.exec_())

@@ -11,6 +11,8 @@ class cadWidget(QWidget):
         super().__init__(parent)
         self.img = None
         self.img_ratio_original = None
+        self.img_width_original = None
+        self.img_height_original = None
         self.run_init(config)
 
     def run_init(self, config):
@@ -21,6 +23,7 @@ class cadWidget(QWidget):
         qp = QPainter()
         qp.begin(self)
         self._draw_image(qp)
+        self._draw_rect(qp)
         qp.end()
 
     def _draw_image(self, pq):
@@ -28,6 +31,7 @@ class cadWidget(QWidget):
         image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
         if self.img_ratio_original==None:
             self.img_ratio_original = image.shape[1]/image.shape[0]
+            self.img_width_original, self.img_height_original = image.shape[1], image.shape[0]
         image = cv2.resize(image, dsize=self.img_resize, interpolation=cv2.INTER_CUBIC)
         im = QImage(image,image.shape[1],image.shape[0], image.shape[1] * 3, QImage.Format_BGR888)
         pq.drawImage(0, 0, im)
@@ -46,8 +50,13 @@ class cadWidget(QWidget):
         self._set_img_dim_upon_resize()
         self.update()
 
-    def _draw_rect(self, pq, dim, id):
-        self.pq.drawRect(*dim)
+    def _draw_rect(self, pq):
+        x_scale = self.img_resize[0]/self.img_width_original
+        y_scale = self.img_resize[1]/self.img_height_original
+        pq.setPen(QPen(QColor(255,0,0), 2, Qt.DotLine))
+        for key,dim in config['rect_frames'].items():
+            dim = (int(dim[0]*x_scale),int(dim[1]*y_scale),int(dim[2]*x_scale),int(dim[3]*y_scale))
+            pq.drawRect(*dim)
 
     def mouseMoveEvent(self, event):
         pass
