@@ -21,3 +21,10 @@ def prepare_config(widget_name):
     return {'svg_file': synoptic['svg_file'][which],
               'model': synoptic['model'][which],
               'hover_style': synoptic['hover_style'][which]}
+
+def extract_all_model_keys():
+    temp_ = [list(each.keys()) for each in synoptic['model']]
+    all_keys = []
+    for each in temp_:
+        all_keys = all_keys + each
+    return all_keys

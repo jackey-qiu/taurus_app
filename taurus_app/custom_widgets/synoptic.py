@@ -1,17 +1,18 @@
-import sys
+import sys, re
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtSvg import QSvgWidget, QSvgRenderer
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 import xml.etree.ElementTree as ET
 from taurus.qt.qtgui.container import TaurusWidget
-import re
+from taurus_app.config.synoptic_config import extract_all_model_keys
 
 class SynopticWidget(QSvgWidget, TaurusWidget):
 
     cursorCheck = pyqtSignal(int, int)
-    modelKeys = ['gx', 'gy', 'ior3', 'offset', 'ior1', 'mot1', 'ior2']
+    modelKeys = extract_all_model_keys()
 
     def __init__(self, parent=None):
+        #self.update_model_keys(['gx', 'gy', 'ior3', 'offset', 'ior1', 'mot1', 'ior2'])
         super(SynopticWidget, self).__init__(parent = parent)
 
     def run_init(self, config):
@@ -30,7 +31,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
     @classmethod
     def update_model_keys(cls, key_list):
          cls.modelKeys = list(set(cls.modelKeys + key_list))
-         print(cls.modelKeys)
 
     def _init_actions(self):
         self._init_svg()
