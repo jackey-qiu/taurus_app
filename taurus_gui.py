@@ -4,7 +4,8 @@ from taurus import Device
 from taurus.qt.qtgui.container import TaurusMainWindow
 from taurus.qt.qtgui.application import TaurusApplication
 import taurus_app.config.synoptic_config as synoptic_config
-from taurus_app.config.widget_model_config import widget_models
+from taurus_app.config.widget_model_config import widget_models, widget_taurus_form_models
+from taurus_app.config.cad_config import taurus_form_name
 from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, MacroExecutionWindow
 from pathlib import Path
 
@@ -34,6 +35,18 @@ class MyMainWindow(MacroExecutionWindow):
     def _set_model(self):
         for widget, model in widget_models.items():
             getattr(self, widget).setModel(model)
+        '''
+        for widget, model in widget_taurus_form_models.items():
+            labels = []
+            models = []
+            for each in model:
+                label, model = each.split(':')
+                labels.append(label)
+                models.append(model)
+            getattr(self,widget).addModels(models)
+            for i in range(len(labels)):
+                getattr(self,widget)[i].labelConfig = labels[i]
+        '''
 
     def put_down_all_absorbers(self):
         for each in self.widget_drawing.absorber_components:
@@ -101,6 +114,7 @@ if __name__ == "__main__":
     TaurusMainWindow.loadSettings(myWin)
     #setup synotic widget: use the first frame at the beginning
     myWin.widget_synopic.run_init(synoptic_config.prepare_config(synoptic_config.synoptic['frame'][0]))
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    myWin.widget_cad.set_taurus_form(getattr(myWin,taurus_form_name), taurus_form_name)
+    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     myWin.show()
     sys.exit(app.exec_())

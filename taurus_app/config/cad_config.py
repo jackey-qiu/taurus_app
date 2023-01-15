@@ -18,3 +18,5 @@ config = {
     'hover_style':[(255, 0, 0), Qt.DotLine, (100,0,255,50)],
     'non_hover_style':[(0, 255, 0), Qt.SolidLine, (0,255,255,50)],
 }
+
+taurus_form_name = 'taurusForm'

@@ -12,3 +12,7 @@ widget_models = {'taurusLed': 'motor/motctrl01/1/State',
           'taurusValueSpinBox_offset':'pm/slitctrl01/2/Position',
           'taurusValueSpinBox_gx':'motor/motctrl01/3/Position',
           'taurusValueSpinBox_gy':'motor/motctrl01/4/Position'}
+
+widget_taurus_form_models = {'taurusForm':{'OH':['motor1:motor/motctrl01/1/Position'],'CC':['motor2:motor/motctrl01/2/Position'],'PD':['motor3:motor/motctrl01/3/Position'],
+                                           'XFI':['ior1:ioregister/iorctrl01/1/SimulationMode'],'IM':['ior2:ioregister/iorctrl01/2/SimulationMode','ior3:sys/tg_test/1/boolean_scalar']},
+                            }

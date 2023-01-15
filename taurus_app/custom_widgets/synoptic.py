@@ -12,7 +12,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
     modelKeys = extract_all_model_keys()
 
     def __init__(self, parent=None):
-        #self.update_model_keys(['gx', 'gy', 'ior3', 'offset', 'ior1', 'mot1', 'ior2'])
         super(SynopticWidget, self).__init__(parent = parent)
 
     def run_init(self, config):
@@ -234,6 +233,9 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             [self.update_style_when_hovered(each) for each in pos_ids]
         else:
             for each in self.last_clicked_shapes_id:
+                # if each in self.anchored_shapes:#if anchored, then apply hover style
+                    # self.update_style_when_hovered(each)
+                # else:
                 self._get_element_with_id(each).set('style', self.style_box[each])
             self.reload_svg()
 

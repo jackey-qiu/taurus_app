@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1440</width>
-    <height>847</height>
+    <height>998</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -639,6 +639,12 @@
             <enum>Qt::Vertical</enum>
            </property>
            <widget class="QFrame" name="frame_4">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>500000</height>
+             </size>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -672,7 +678,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>1157</width>
-                  <height>641</height>
+                  <height>713</height>
                  </rect>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -694,7 +700,20 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <widget class="SynopticWidget" name="widget_synopic" native="true"/>
+              <widget class="QSplitter" name="splitter_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="SynopticWidget" name="widget_synopic" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+               <widget class="TaurusForm" name="taurusForm"/>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -785,6 +804,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>TaurusWidget</class>
+   <extends>QWidget</extends>
+   <header>taurus.qt.qtgui.container</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>QLed</class>
    <extends>QPixmapWidget</extends>
    <header>taurus.qt.qtgui.display</header>
@@ -813,6 +838,11 @@
    <class>TaurusValueSpinBox</class>
    <extends>QWidget</extends>
    <header>taurus.qt.qtgui.input</header>
+  </customwidget>
+  <customwidget>
+   <class>TaurusForm</class>
+   <extends>TaurusWidget</extends>
+   <header>taurus.qt.qtgui.panel</header>
   </customwidget>
   <customwidget>
    <class>TerminalWidget</class>

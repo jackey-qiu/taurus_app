@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 import imageio, cv2
 from taurus_app.config.cad_config import config
+from taurus_app.config.widget_model_config import widget_taurus_form_models
 
 class cadWidget(QWidget):
     def __init__(self,parent=None):
@@ -15,11 +16,18 @@ class cadWidget(QWidget):
         self.img_width_original = None
         self.img_height_original = None
         self.frame = {}
+        self.anchored_frames = []
+        self.taurus_form = None
+        self.model_labels = []
         self.run_init(config)
 
     def run_init(self, config):
         self.img = config['img']
         self.img_resize = config['size']
+
+    def set_taurus_form(self, taurus_form, form_name):
+        self.taurus_form = taurus_form
+        self.taurus_form_model = widget_taurus_form_models[form_name]
 
     def paintEvent(self, e):
         qp = QPainter()
@@ -72,11 +80,45 @@ class cadWidget(QWidget):
 
     def mouseMoveEvent(self, event):
         for each in self.frame:
-            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
+            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]) or each in self.anchored_frames:
                 config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['hover_style']
             else:
                 config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['non_hover_style']
         self.update()
 
     def mousePressEvent(self, event):
-        pass
+        for each in self.frame:
+            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
+                if each in self.anchored_frames:
+                    self.anchored_frames.remove(each)
+                    self.remove_taurus_form_model(each)
+                    return
+                else:
+                    self.anchored_frames.append(each)
+                    self.add_taurus_form_model(each)
+                    return
+
+    def add_taurus_form_model(self, frame_key):
+        models_raw = self.taurus_form_model[frame_key]
+        labels = []
+        models = []
+        for each in models_raw:
+            label, model = each.split(':')
+            labels.append(label)
+            models.append(model)
+        self.model_labels = self.model_labels + labels
+        self.taurus_form.addModels(models)
+        for i in range(len(self.model_labels)):
+            self.taurus_form[i].labelConfig = self.model_labels[i]  
+
+    def remove_taurus_form_model(self, frame_key):
+        models_raw = self.taurus_form_model[frame_key]
+        models = []
+        for each in models_raw:
+            label, model = each.split(':')
+            models.append(model)
+            self.model_labels.remove(label)
+        self.taurus_form.removeModels(models)
+        for i in range(len(self.model_labels)):
+            self.taurus_form[i].labelConfig = self.model_labels[i]  
+      
