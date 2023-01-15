@@ -99,6 +99,7 @@ if __name__ == "__main__":
     #setup synotic widget: use the first frame at the beginning
     myWin.widget_synopic.run_init(synoptic_config.prepare_config(synoptic_config.synoptic['frame'][0]))
     myWin.widget_cad.set_taurus_form(getattr(myWin,taurus_form_name), taurus_form_name)
+    myWin.widget_cad.set_synoptic_widget(myWin.widget_synopic)
     # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     myWin.show()
     sys.exit(app.exec_())

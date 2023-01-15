@@ -3,7 +3,11 @@ __all__ = ['synoptic', 'prepare_config']
 
 synoptic = {
             'frame':['OH','CC', 'PD', 'XFI','IM'],
-            'svg_file':['taurus_app/resources/svgs/synoptic_view_1.svg']*5,
+            'svg_file':['taurus_app/resources/svgs/synoptic_view_1.svg',
+                        'taurus_app/resources/svgs/synoptic_view_2_funny.svg',
+                        'taurus_app/resources/svgs/synoptic_view_3_funny.svg',
+                        'taurus_app/resources/svgs/synoptic_view_4_funny.svg',
+                        'taurus_app/resources/svgs/synoptic_view_5_funny.svg'],
             'model': [{
                       'ior1':'ioregister/iorctrl01/1/SimulationMode',
                       'ior2':'ioregister/iorctrl01/2/SimulationMode',

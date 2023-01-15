@@ -6,6 +6,7 @@ from pathlib import Path
 import imageio, cv2
 from taurus_app.config.cad_config import config
 from taurus_app.config.widget_model_config import widget_taurus_form_models
+import taurus_app.config.synoptic_config as synoptic_config
 
 class cadWidget(QWidget):
     def __init__(self,parent=None):
@@ -28,6 +29,9 @@ class cadWidget(QWidget):
     def set_taurus_form(self, taurus_form, form_name):
         self.taurus_form = taurus_form
         self.taurus_form_model = widget_taurus_form_models[form_name]
+
+    def set_synoptic_widget(self, widget):
+        self.synoptic_widget = widget
 
     def paintEvent(self, e):
         qp = QPainter()
@@ -89,6 +93,7 @@ class cadWidget(QWidget):
     def mousePressEvent(self, event):
         for each in self.frame:
             if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
+                self.synoptic_widget.run_init(synoptic_config.prepare_config(each))
                 if each in self.anchored_frames:
                     self.anchored_frames.remove(each)
                     self.remove_taurus_form_model(each)
