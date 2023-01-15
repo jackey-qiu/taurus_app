@@ -9,10 +9,12 @@ from taurus_app.config.cad_config import config
 class cadWidget(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent)
+        self.setMouseTracking(True)
         self.img = None
         self.img_ratio_original = None
         self.img_width_original = None
         self.img_height_original = None
+        self.frame = {}
         self.run_init(config)
 
     def run_init(self, config):
@@ -54,12 +56,27 @@ class cadWidget(QWidget):
         x_scale = self.img_resize[0]/self.img_width_original
         y_scale = self.img_resize[1]/self.img_height_original
         pq.setPen(QPen(QColor(255,0,0), 2, Qt.DotLine))
-        for key,dim in config['rect_frames'].items():
+        for key,(dim, line_color, line_style, brush_color) in config['rect_frames'].items():
             dim = (int(dim[0]*x_scale),int(dim[1]*y_scale),int(dim[2]*x_scale),int(dim[3]*y_scale))
+            self.frame[key] = {'x': dim[0], 'y':dim[1], 'width': dim[2], 'height': dim[3]}
+            pq.setPen(QPen(QColor(*line_color), 2, line_style))
+            pq.setBrush(QColor(*brush_color))
             pq.drawRect(*dim)
 
+    def check_bounds_rect(self, x, y, coords):
+        top_left_corner = (coords['x'], coords['y'])
+        bottom_right_corner = (coords['x']+coords['width'], coords['y']+coords['height'])
+        if (top_left_corner[0]<=x<= bottom_right_corner[0]) and (top_left_corner[1]<=y<= bottom_right_corner[1]):
+            return True
+        return False
+
     def mouseMoveEvent(self, event):
-        pass
+        for each in self.frame:
+            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
+                config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['hover_style']
+            else:
+                config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['non_hover_style']
+        self.update()
 
     def mousePressEvent(self, event):
         pass
