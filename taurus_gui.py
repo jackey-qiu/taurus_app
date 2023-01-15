@@ -21,10 +21,6 @@ class MyMainWindow(MacroExecutionWindow):
         TaurusMainWindow.loadSettings(self)
         self.doorChanged.emit(self.doorName())
         self.widget_terminal.update_name_space('main_gui',self)
-        '''
-        self.power_meter = PowerMeter()
-        setattr(self.power_meter, 'holder', self)
-        '''
         setattr(self.widget_drawing, 'holder', self)
         # self.verticalLayout_4.addWidget(self.power_meter)
         self.widget_drawing.setLabel(self.label_mouse_checker)
@@ -35,19 +31,7 @@ class MyMainWindow(MacroExecutionWindow):
     def _set_model(self):
         for widget, model in widget_models.items():
             getattr(self, widget).setModel(model)
-        '''
-        for widget, model in widget_taurus_form_models.items():
-            labels = []
-            models = []
-            for each in model:
-                label, model = each.split(':')
-                labels.append(label)
-                models.append(model)
-            getattr(self,widget).addModels(models)
-            for i in range(len(labels)):
-                getattr(self,widget)[i].labelConfig = labels[i]
-        '''
-
+            
     def put_down_all_absorbers(self):
         for each in self.widget_drawing.absorber_components:
             widget = self.widget_drawing.shape_config[each]['linked_widget']['widget']
