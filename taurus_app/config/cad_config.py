@@ -16,6 +16,7 @@ config = {
                    'IM':[(1117,183,324,286),(0,255,0), Qt.SolidLine, (0,255,255,50)],
                   },
     'hover_style':[(255, 0, 0), Qt.DotLine, (100,0,255,50)],
+    'anchor_style':[(255, 0, 0), Qt.SolidLine, (200,0,255,50)],
     'non_hover_style':[(0, 255, 0), Qt.SolidLine, (0,255,255,50)],
 }
 

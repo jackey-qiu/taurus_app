@@ -31,4 +31,4 @@ def extract_all_model_keys():
     all_keys = []
     for each in temp_:
         all_keys = all_keys + each
-    return all_keys
+    return list(set(all_keys))

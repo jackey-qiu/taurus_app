@@ -84,24 +84,28 @@ class cadWidget(QWidget):
 
     def mouseMoveEvent(self, event):
         for each in self.frame:
-            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]) or each in self.anchored_frames:
+            if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
                 config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['hover_style']
             else:
                 config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['non_hover_style']
+            if each in self.anchored_frames:
+                config['rect_frames'][each] = [config['rect_frames'][each][0]] + config['anchor_style']
         self.update()
 
     def mousePressEvent(self, event):
         for each in self.frame:
             if self.check_bounds_rect(event.x(), event.y(), self.frame[each]):
-                self.synoptic_widget.run_init(synoptic_config.prepare_config(each))
-                if each in self.anchored_frames:
+                if event.button() == Qt.LeftButton:
+                    self.synoptic_widget.run_init(synoptic_config.prepare_config(each))
+                if each in self.anchored_frames and event.button() == Qt.RightButton:#right click to remove
                     self.anchored_frames.remove(each)
                     self.remove_taurus_form_model(each)
                     return
                 else:
-                    self.anchored_frames.append(each)
-                    self.add_taurus_form_model(each)
-                    return
+                    if each not in self.anchored_frames:
+                        self.anchored_frames.append(each)
+                        self.add_taurus_form_model(each)
+                        return
 
     def add_taurus_form_model(self, frame_key):
         models_raw = self.taurus_form_model[frame_key]

@@ -5,6 +5,15 @@ from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 import xml.etree.ElementTree as ET
 from taurus.qt.qtgui.container import TaurusWidget
 from taurus_app.config.synoptic_config import extract_all_model_keys
+from taurus.core import TaurusEventType
+
+#taurus style api
+from taurus.core.util.colors import (ColorPalette, DEVICE_STATE_DATA, ATTRIBUTE_QUALITY_DATA,) 
+from taurus.qt.qtgui.util.tauruscolor import QtColorPalette 
+from taurus.core.taurusbasetypes import AttrQuality 
+from taurus.core.tango import DevState
+QT_DEVICE_STATE_PALETTE = QtColorPalette(DEVICE_STATE_DATA, DevState) 
+QT_ATTRIBUTE_QUALITY_PALETTE = QtColorPalette(ATTRIBUTE_QUALITY_DATA, AttrQuality) 
 
 class SynopticWidget(QSvgWidget, TaurusWidget):
 
@@ -13,30 +22,26 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
 
     def __init__(self, parent=None):
         super(SynopticWidget, self).__init__(parent = parent)
+        self.reload_count = 0
 
     def run_init(self, config):
         #supposed to be called inside main gui
-        #config is a dict with keys of svg_file, model and hover_style
+        #config is a dict with keys of frame, svg_file, model and hover_style
         self.svg_file = config['svg_file']
         self.hover_style = config['hover_style']
         self.model_list = config['model']
-        self.update_model_keys(list(config['model'].keys()))
+        self.set_tango_models()
         self.tree = ET.parse(self.svg_file)
         self._init_actions()
         #signal slot connection
         self.setMouseTracking(True)
         self.cursorCheck.connect(self.checkCursorPos)
 
-    @classmethod
-    def update_model_keys(cls, key_list):
-         cls.modelKeys = list(set(cls.modelKeys + key_list))
-
     def _init_actions(self):
         self._init_svg()
         self._get_ids_from_svg()
         self._set_style_model_when_hovered()
         self._set_init_transform()
-        self.set_tango_models()
         self.reload_svg()
         self.style_box = self._get_init_styles()
         self.last_clicked_shapes_id= []
@@ -108,11 +113,20 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
                 ids_.append(id)
         self.ids_shape = ids_
 
+    def _update_model_style_to_svg(self, id, model_tag):
+        modelObj = self.getModelObj(key = model_tag)
+        if modelObj==None:
+            return
+        assert hasattr(modelObj, 'quality'), model_tag + 'is Not a right model, model should be an attribute'
+        fill_color = 'fill:#'+QT_ATTRIBUTE_QUALITY_PALETTE.hex(modelObj.quality)
+        style_original = self._get_element_with_id(id).get('style')
+        if style_original != None:
+            new_style, update_tag = self._get_updated_style_attrib(style_original, fill_color)
+            if update_tag:
+                self._get_element_with_id(id).set('style',new_style)
+
     def _update_model_move_to_svg(self, id):
-        search_pattern = {
-                          'translate':"translate\((\-?\d+\.?\d*),(\-?\d+\.?\d*)\)",#get ('20', '30')' in 'translate(20,30)'
-                          'rotate':"rotate\((\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*)\)",#get ('10', '20', '30') in 'rotate(10,20,30)'
-                          }
+        search_pattern = "(?:rotate|translate)\((\-?\d+\.?\d*),(\-?\d+\.?\d*),?(\-?\d+\.?\d*)?\)"
         #model_move_string eg. "translate(<old_1>+<offset>*1,<old_2>);rotate(int(<offset>),<old_2>,<old_3>)"
         model_move_string = self._get_element_with_id(id).get('model_move')
         transform_attribute = self._get_element_with_id(id).get('transform')
@@ -128,11 +142,8 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             #step 1 find <old_x> tag x = 1, 2, or 3
             old_tags = re.findall("(<old_[1-3]>)", move)
             #get old values only two possibilities, either translate or rotate
-            old_values = None
-            if move.startswith('translate'):
-                old_values = re.search(search_pattern['translate'],transform_attribute).groups()
-            elif move.startswith('rotate'):
-                old_values = re.search(search_pattern['rotate'],transform_attribute).groups()
+            #matched result look like either ('10','20','30') for rotation case or ('10','20',None) for translation case
+            old_values = list(filter(lambda itm: itm!=None, re.search(search_pattern,transform_attribute).groups()))
             for tag in old_tags:#eg <old_1>
                 index_ = int(tag[-2])-1 #either 0 or 1 or 2
                 assert len(old_values)>index_, 'the size of old_values {} is too small'.format(old_values)
@@ -140,23 +151,22 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
                 move_updated = move_updated.replace(tag, str(old_values[index_]))
             #now get the model tags
             matched_model_names = re.search("<(.*?)>",move_updated).groups()
-            for each_model in matched_model_names:
-                value = 'undefined'
-                if each_model in self.modelKeys:
-                    value = self.getModelObj(key = each_model).rvalue
-                    if type(value)!=bool:
-                        value = value._magnitude
-                    else:
-                        value = int(value)
-                #replace the model tag with the assiciated model values
-                move_updated = move_updated.replace('<{}>'.format(each_model), str(value))
+            assert len(matched_model_names)<=1, 'You are allowed to connet to only one type of model to each synoptic component'
+            if len(matched_model_names)!=0:
+                if matched_model_names[0] in self.modelKeys:
+                    self._update_model_style_to_svg(id, matched_model_names[0])                    
+                    model = self.getModelObj(key = matched_model_names[0])
+                    if model!=None:
+                        value = model.rvalue
+                        value = value._magnitude if type(value)!=bool else int(value)
+                        #replace the model tag with the assiciated model values
+                        move_updated = move_updated.replace('<{}>'.format(matched_model_names[0]), str(value))
             #move_updated_items eg (('translate','(0,2*3)'))
             move_updated_items = re.findall("(translate|rotate)(\(.*\))",move_updated)[0]
             # do some evaluation for some math equation eg. 2*3 --> 6, since svg is not happy about math symbol
             move_updated = move_updated_items[0] + str(eval(move_updated_items[1]))
             moves[i] = move_updated
         self._get_element_with_id(id).set('transform',''.join(moves))
-        return ''.join(moves)
 
     def _cursor_on_which_component(self, cx, cy):
         ids_cursor_on = []
@@ -177,22 +187,30 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             self._update_model_move_to_svg(id)
         self.svg_bytes = bytearray(ET.tostring(self.tree.getroot()).decode(), encoding='utf-8')
 
+    def _get_updated_style_attrib(self, style_str, modifier):
+        #style_str is ; seperated string for styling eg 'display:inline;fill:#008000;stroke:#ff0000;stroke-width:3.11811;stroke-dasharray:3.11811, 9.35433;stroke-dashoffset:0'
+        #modifier is one/muti ; seperated segments eg 'display:inline;fill:#008000'
+        #style_list_original = style_str.rsplit(';')
+        style_str_new = dict((x.strip(), y.strip()) for x, y in (each.rsplit(':') for each in style_str.rsplit(';')))
+        style_str_updated = dict((x.strip(), y.strip()) for x, y in (each.rsplit(':') for each in modifier.rsplit(';')))
+        new_tag = False
+        for each in style_str_updated:
+            if each not in style_str_new:
+                new_tag = True
+                break
+            if style_str_updated[each]!=style_str_new[each]:
+                new_tag = True
+                break
+        #new_tag is True is the modifier items are different from original ones, False otherwise
+        style_str_new.update(style_str_updated)
+        return ';'.join([':'.join(each) for each in style_str_new.items()]), new_tag
+
     def update_xml_tree(self, shape_id, modifier_dict = {}):
         #shape_id should be a string segments seperated by / representing the
         #modifier_dict hold the attribute as keys and the updated attribute values as the values
             #note the spetial attribute of 'text' means modifying the text of the node, which can be
             #done by querying text directly. Therefore, you should never use 'text' for attrib names to
             #avoid this conflict.
-
-        def _update_style_attrib(style_str, modifier):
-            #style_str is ; seperated string for styling eg 'display:inline;fill:#008000;stroke:#ff0000;stroke-width:3.11811;stroke-dasharray:3.11811, 9.35433;stroke-dashoffset:0'
-            #modifier is one/muti ; seperated segments eg 'display:inline;fill:#008000'
-            #style_list_original = style_str.rsplit(';')
-            style_str_new = dict((x.strip(), y.strip()) for x, y in (each.rsplit(':') for each in style_str.rsplit(';')))
-            style_str_updated = dict((x.strip(), y.strip()) for x, y in (each.rsplit(':') for each in modifier.rsplit(';')))
-            style_str_new.update(style_str_updated)
-            return ';'.join([':'.join(each) for each in style_str_new.items()])
-
         temp_ = self._get_element_with_id(shape_id)
         if temp_ != None:
             for key, value in modifier_dict.items():
@@ -200,20 +218,26 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
                     if key!='style':
                         temp_.set(key, str(value))
                     else:#if key is style
-                        value = _update_style_attrib(temp_.get('style'), value)
-                        temp_.set(key, str(value))
+                        value, updated_tag = self._get_updated_style_attrib(temp_.get('style'), value)
+                        if updated_tag:
+                            temp_.set(key, str(value))
                 else:
                     temp_.text = str(value)
         self.reload_svg()
 
     def handleEvent(self, e_s, e_t, e_v):
-        self.reload_svg()
+        #only respond to non-periodic event to improve performance
+        if TaurusEventType.whatis(e_t)!='Periodic':#others: Change, Config, Error
+            self.reload_svg()
 
     def reload_svg(self):
-        self._regenerate_svg_bytes()
-        self.load(self.svg_bytes)
-        self.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
-        self.show()
+        try:#this fail due to asynchronization loading ??
+            self._regenerate_svg_bytes()
+            self.load(self.svg_bytes)
+            self.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
+            self.show()
+        except Exception as e:
+            print(str(e))
 
     def _init_svg(self):#only called in init
         self.svg_bytes = bytearray(ET.tostring(self.tree.getroot()).decode(), encoding='utf-8')
@@ -233,9 +257,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
             [self.update_style_when_hovered(each) for each in pos_ids]
         else:
             for each in self.last_clicked_shapes_id:
-                # if each in self.anchored_shapes:#if anchored, then apply hover style
-                    # self.update_style_when_hovered(each)
-                # else:
                 self._get_element_with_id(each).set('style', self.style_box[each])
             self.reload_svg()
 
