@@ -226,6 +226,8 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
         self.reload_svg()
 
     def handleEvent(self, e_s, e_t, e_v):
+        self.reload_svg()
+        return
         #only respond to non-periodic event to improve performance
         if TaurusEventType.whatis(e_t)!='Periodic':#others: Change, Config, Error
             self.reload_svg()

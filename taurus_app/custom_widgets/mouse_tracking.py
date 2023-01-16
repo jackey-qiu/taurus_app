@@ -5,6 +5,9 @@ from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 from taurus.qt.qtgui.container import TaurusWidget
 from PyQt5 import uic
 import numpy as np
+from pathlib import Path
+
+popup_gui = str(Path(__file__).parent.parent / "ui" / "setup_table_gui.ui")
 
 draw_components = {
     'comp1':{
@@ -341,7 +344,7 @@ class setupComponent(QDialog):
     def __init__(self, parent=None, config_dict = {}, comp_key = None):
         super().__init__(parent)
         self.parent = parent
-        uic.loadUi("setup_table_gui.ui", self)
+        uic.loadUi(popup_gui, self)
         self.keys_lineEdit = []
         self.comp_key = comp_key
         self.comp_key = comp_key

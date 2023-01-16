@@ -10,6 +10,7 @@ from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEdito
 from pathlib import Path
 
 main_gui = str(Path(__file__).parent / "taurus_app" / "ui" / "main_gui.ui")
+style_sheet_path = str(Path(__file__).parent / "taurus_app" / "resources" / "stylesheets" / "Takezo.qss")
 
 class MyMainWindow(MacroExecutionWindow):
     def __init__(self, parent=None, designMode=False):
@@ -83,6 +84,7 @@ if __name__ == "__main__":
     from taurus.qt.qtgui.application import TaurusApplication
     import qdarkstyle
     import sardana
+    from PyQt5 import QtCore
 
     parser = argparse.get_taurus_parser()
     parser.set_usage("%prog [options]")
@@ -101,5 +103,12 @@ if __name__ == "__main__":
     myWin.widget_cad.set_taurus_form(getattr(myWin,taurus_form_name), taurus_form_name)
     myWin.widget_cad.set_synoptic_widget(myWin.widget_synopic)
     # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+
+    #open qss file
+    #more style files can be downloaded from https://qss-stock.devsecstudio.com/index.php
+    File = open(style_sheet_path,'r')
+    with File:
+        qss = File.read()
+        app.setStyleSheet(qss)
     myWin.show()
     sys.exit(app.exec_())

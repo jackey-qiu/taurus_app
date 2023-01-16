@@ -25,12 +25,12 @@
      inkscape:document-units="px"
      showgrid="false"
      showguides="true"
-     inkscape:zoom="1.922048"
-     inkscape:cx="486.20015"
-     inkscape:cy="358.4718"
+     inkscape:zoom="0.79464085"
+     inkscape:cx="397.03471"
+     inkscape:cy="561.25984"
      inkscape:window-width="1920"
      inkscape:window-height="1137"
-     inkscape:window-x="1912"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer2"
@@ -80,8 +80,8 @@
        model="y:ior1;width:ampli"
        model_scales="y:-50;width:1"
        clickable="True"
-       move_when_left_clicked="not &lt;ior1&gt;"
-       model_move="translate(0,int(&lt;ior1&gt;)*-20)" /><rect
+       move_when_left_clicked="&lt;gx&gt;+1"
+       model_move="translate(0,int(&lt;gx&gt;)*-5)" /><rect
        style="fill:#008000;stroke:#00ff00;stroke-width:0.82665;stroke-dasharray:none;stroke-dashoffset:0"
        id="motor2"
        width="11.601137"
@@ -181,7 +181,8 @@
        inkscape:transform-center-x="-1.6937651"
        inkscape:transform-center-y="-0.44273799"
        transform="rotate(0,147.6,103.5)"
-       model_move="rotate(&lt;mot1&gt;,&lt;old_2&gt;,&lt;old_3&gt;)" /><g
+       model_move="rotate(&lt;mot1&gt;,&lt;old_2&gt;,&lt;old_3&gt;)"
+       move_when_left_clicked="&lt;mot1&gt;+1" /><g
        sodipodi:type="inkscape:box3d"
        id="g13251"
        style="fill:#ff00ff;stroke:#ff0000;stroke-width:0.79375;stroke-dasharray:none;stroke-dashoffset:0"
@@ -242,4 +243,4 @@
        style="font-size:26.6667px;white-space:pre;shape-inside:url(#rect13375);display:inline;fill:#ff00ff;stroke:#ff0000;stroke-width:0;stroke-dasharray:none;stroke-dashoffset:0"><tspan
          x="95.730469"
          y="577.83954"
-         id="tspan82189">tango</tspan></text></g></svg>
+         id="tspan25092">tango</tspan></text></g></svg>
