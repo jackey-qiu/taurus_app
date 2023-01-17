@@ -16,14 +16,11 @@ class MyMainWindow(MacroExecutionWindow):
     def __init__(self, parent=None, designMode=False):
         MacroExecutionWindow.__init__(self, parent, designMode)
         uic.loadUi(main_gui, self)
-        self._init_widget_()
         self._qDoor = None
         self.doorChanged.connect(self.onDoorChanged)
         TaurusMainWindow.loadSettings(self)
-        self.doorChanged.emit(self.doorName())
         self.widget_terminal.update_name_space('main_gui',self)
         setattr(self.widget_drawing, 'holder', self)
-        # self.verticalLayout_4.addWidget(self.power_meter)
         self.widget_drawing.setLabel(self.label_mouse_checker)
         self.pushButton_all_in.clicked.connect(self.put_down_all_absorbers)
         self.pushButton_all_out.clicked.connect(self.take_out_all_absorbers)
@@ -45,15 +42,6 @@ class MyMainWindow(MacroExecutionWindow):
             if hasattr(self, widget):
                 getattr(self, widget).setChecked(False)        
 
-    def _init_widget_(self):
-        self.registerConfigDelegate(self.widget_sequence)
-        self.widget_sequence.setModelInConfig(True)
-        self.widget_sequence.doorChanged.connect(
-            self.widget_sequence.onDoorChanged)
-        self.widget_sequence.shortMessageEmitted.connect(
-            self.onShortMessage)
-        self.statusBar().showMessage("MacroExecutor ready now")
-
     def setCustomMacroEditorPaths(self, customMacroEditorPaths):
         MacroExecutionWindow.setCustomMacroEditorPaths(
             self, customMacroEditorPaths)
@@ -65,15 +53,22 @@ class MyMainWindow(MacroExecutionWindow):
         if self._qDoor:
             self._qDoor.macroStatusUpdated.disconnect(
                 self.widget_sequence.onMacroStatusUpdated)
+            self._qDoor.macroStatusUpdated.disconnect(
+                self.widget_sequencer.onMacroStatusUpdated)
         if doorName == "":
             return
         self._qDoor = Device(doorName)
         self._qDoor.macroStatusUpdated.connect(
             self.widget_sequence.onMacroStatusUpdated)
         self.widget_sequence.onDoorChanged(doorName)
+        self._qDoor.macroStatusUpdated.connect(
+            self.widget_sequencer.onMacroStatusUpdated)
+        self.widget_sequencer.onDoorChanged(doorName)
+        self.widget_spock.setModel(doorName)
 
     def setModel(self, model):
         MacroExecutionWindow.setModel(self, model)
+        self.widget_sequencer.setModel(model)
         self.widget_sequence.setModel(model)
 
     def updateParameter(self):

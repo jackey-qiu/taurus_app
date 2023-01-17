@@ -22,7 +22,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
 
     def __init__(self, parent=None):
         super(SynopticWidget, self).__init__(parent = parent)
-        self.reload_count = 0
 
     def run_init(self, config):
         #supposed to be called inside main gui
@@ -227,10 +226,6 @@ class SynopticWidget(QSvgWidget, TaurusWidget):
 
     def handleEvent(self, e_s, e_t, e_v):
         self.reload_svg()
-        return
-        #only respond to non-periodic event to improve performance
-        if TaurusEventType.whatis(e_t)!='Periodic':#others: Change, Config, Error
-            self.reload_svg()
 
     def reload_svg(self):
         try:#this fail due to asynchronization loading ??
