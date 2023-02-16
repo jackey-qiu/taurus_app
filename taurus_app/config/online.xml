@@ -1,0 +1,1347 @@
+<?xml version="1.0"?>
+<hw>
+<device>
+ <name>eh_adc01</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc02</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc03</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc04</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc05</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc06</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc07</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_adc08</name>
+ <type>adc</type>
+ <module>tip830</module>
+ <device>p25/adc/eh.08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_dac01</name>
+ <type>dac</type>
+ <module>tip551</module>
+ <device>p25/dac/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_dac02</name>
+ <type>dac</type>
+ <module>tip551</module>
+ <device>p25/dac/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_dac03</name>
+ <type>dac</type>
+ <module>tip551</module>
+ <device>p25/dac/eh.03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_dac04</name>
+ <type>dac</type>
+ <module>tip551</module>
+ <device>p25/dac/eh.04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg01</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg02</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg03</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg04</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg05</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg06</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg07</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg08</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg09</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in09</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg10</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in10</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg11</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in11</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg12</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in12</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg13</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in13</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg14</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in14</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg15</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in15</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_ireg16</name>
+ <type>input_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.in16</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg01</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg02</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg03</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg04</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg05</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg06</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg07</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg08</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg09</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out09</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg10</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out10</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg11</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out11</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg12</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out12</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg13</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out13</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg14</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out14</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg15</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out15</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_oreg16</name>
+ <type>output_register</type>
+ <module>sis3610</module>
+ <device>p25/register/eh.out16</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c01</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c02</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c03</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c04</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c05</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c06</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c07</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c08</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c09</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.09</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c10</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.10</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c11</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.11</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c12</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.12</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c13</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.13</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c14</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.14</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c15</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.15</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c16</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.16</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c17</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.17</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c18</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.18</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c19</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.19</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c20</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.20</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c21</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.21</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c22</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.22</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c23</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.23</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c24</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.24</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c25</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.25</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c26</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.26</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c27</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.27</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c28</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.28</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c29</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.29</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c30</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.30</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c31</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.31</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_c32</name>
+ <type>counter</type>
+ <module>sis3820</module>
+ <device>p25/counter/eh.32</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mca01</name>
+ <type>mca</type>
+ <module>mca_8701</module>
+ <device>p25/mca/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mca02</name>
+ <type>mca</type>
+ <module>mca_8701</module>
+ <device>p25/mca/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_t01</name>
+ <type>timer</type>
+ <module>dgg2</module>
+ <device>p25/dgg2/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_t02</name>
+ <type>timer</type>
+ <module>dgg2</module>
+ <device>p25/dgg2/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc01</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc02</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc03</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc04</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc05</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc06</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc07</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_vfc08</name>
+ <type>adc</type>
+ <module>vfcadc</module>
+ <device>p25/vfc/eh.08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot01</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.01</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot02</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.02</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot03</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.03</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot04</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.04</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot05</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.05</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot06</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.06</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot07</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.07</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot08</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.08</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot09</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.09</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot10</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.10</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot11</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.11</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot12</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.12</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot13</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.13</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot14</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.14</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot15</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.15</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot16</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.16</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot17</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.17</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot18</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.18</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot19</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.19</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot20</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.20</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot21</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.21</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot22</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.22</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot23</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.23</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot24</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.24</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot25</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.25</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot26</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.26</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot27</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.27</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot28</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.28</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot29</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.29</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot30</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.30</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot31</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.31</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot32</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.32</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot33</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.33</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot34</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.34</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot35</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.35</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot36</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.36</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot37</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.37</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot38</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.38</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot39</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.39</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot40</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.40</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot41</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.41</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot42</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.42</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot43</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.43</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot44</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.44</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot45</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.45</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot46</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.46</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot47</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.47</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot48</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.48</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot49</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.49</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot50</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.50</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot51</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.51</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot52</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.52</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot53</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.53</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot54</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.54</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot55</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.55</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot56</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.56</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot57</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.57</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot58</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.58</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot59</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.59</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot60</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.60</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot61</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.61</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot62</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.62</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot63</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.63</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot64</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.64</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot65</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.65</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot66</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.66</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot67</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.67</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot68</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.68</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot69</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.69</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot70</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.70</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot71</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.71</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot72</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.72</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot73</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.73</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot74</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.74</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot75</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.75</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot76</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.76</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot77</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.77</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot78</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.78</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot79</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.79</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+<device>
+ <name>eh_mot80</name>
+ <type>stepping_motor</type>
+ <module>oms58</module>
+ <device>p25/motor/eh.80</device>
+ <control>tango</control>
+ <hostname>hase027tngtest:10000</hostname>
+</device>
+</hw>

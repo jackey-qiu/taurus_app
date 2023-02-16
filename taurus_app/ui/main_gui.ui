@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>4</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -59,7 +59,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="TaurusLed" name="taurusLed" native="true">
+                 <widget class="TaurusLed" name="taurusLed">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                     <horstretch>0</horstretch>
@@ -72,7 +72,7 @@
                     <height>30</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>sys/tg_test/1/State</string>
                   </property>
                  </widget>
@@ -123,13 +123,13 @@
                     <height>30</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>motor/dummy_mot_ctrl/1/position</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="TaurusValueSpinBox" name="taurusValueSpinBox" native="true">
+                 <widget class="TaurusValueSpinBox" name="taurusValueSpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -148,7 +148,7 @@
                     <height>30</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>motor/dummy_mot_ctrl/1/position</string>
                   </property>
                  </widget>
@@ -209,14 +209,14 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="TaurusLed" name="taurusLed_2" native="true">
+                 <widget class="TaurusLed" name="taurusLed_2">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
                     <height>50</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>motor/dummy_mot_ctrl/2/State</string>
                   </property>
                  </widget>
@@ -255,13 +255,13 @@
                     <height>50</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>motor/dummy_mot_ctrl/2/position</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_2" native="true">
+                 <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_2">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -280,7 +280,7 @@
                     <height>50</height>
                    </size>
                   </property>
-                  <property name="model" stdset="0">
+                  <property name="model">
                    <string>motor/dummy_mot_ctrl/2/position</string>
                   </property>
                  </widget>
@@ -343,7 +343,7 @@
                  <string/>
                 </property>
                 <property name="checked">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="autoRepeat">
                  <bool>false</bool>
@@ -351,19 +351,19 @@
                 <property name="autoExclusive">
                  <bool>false</bool>
                 </property>
-                <property name="model" stdset="0">
+                <property name="model">
                  <string>sys/tg_test/1/boolean_scalar</string>
                 </property>
-                <property name="showText" stdset="0">
+                <property name="showText">
                  <bool>false</bool>
                 </property>
-                <property name="useParentModel" stdset="0">
+                <property name="useParentModel">
                  <bool>false</bool>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -383,16 +383,16 @@
               </item>
               <item>
                <widget class="TaurusValueCheckBox" name="taurusValueCheckBox_2">
-                <property name="model" stdset="0">
+                <property name="model">
                  <string>ioregister/sis3610in_eh/10/SimulationMode</string>
                 </property>
-                <property name="showText" stdset="0">
+                <property name="showText">
                  <bool>false</bool>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -412,16 +412,16 @@
               </item>
               <item>
                <widget class="TaurusValueCheckBox" name="taurusValueCheckBox_3">
-                <property name="model" stdset="0">
+                <property name="model">
                  <string>ioregister/sis3610in_eh/11/SimulationMode</string>
                 </property>
-                <property name="showText" stdset="0">
+                <property name="showText">
                  <bool>false</bool>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -442,18 +442,18 @@
               <item>
                <widget class="TaurusValueCheckBox" name="taurusValueCheckBox_4">
                 <property name="checked">
-                 <bool>false</bool>
-                </property>
-                <property name="model" stdset="0">
-                 <string>ioregister/sis3610in_eh/12/SimulationMode</string>
-                </property>
-                <property name="showText" stdset="0">
-                 <bool>false</bool>
-                </property>
-                <property name="autoApply" stdset="0">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="model">
+                 <string>ioregister/sis3610in_eh/12/SimulationMode</string>
+                </property>
+                <property name="showText">
+                 <bool>false</bool>
+                </property>
+                <property name="autoApply">
+                 <bool>true</bool>
+                </property>
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -512,17 +512,17 @@
                </widget>
               </item>
               <item>
-               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_offset" native="true">
+               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_offset">
                 <property name="minimumSize">
                  <size>
                   <width>80</width>
                   <height>0</height>
                  </size>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -541,20 +541,20 @@
                </widget>
               </item>
               <item>
-               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gx" native="true">
+               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gx">
                 <property name="minimumSize">
                  <size>
                   <width>80</width>
                   <height>0</height>
                  </size>
                 </property>
-                <property name="model" stdset="0">
+                <property name="model">
                  <string>motor/motctrl01/3/Position</string>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -573,20 +573,20 @@
                </widget>
               </item>
               <item>
-               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gy" native="true">
+               <widget class="TaurusValueSpinBox" name="taurusValueSpinBox_gy">
                 <property name="minimumSize">
                  <size>
                   <width>80</width>
                   <height>0</height>
                  </size>
                 </property>
-                <property name="model" stdset="0">
+                <property name="model">
                  <string>motor/motctrl01/4/Position</string>
                 </property>
-                <property name="autoApply" stdset="0">
+                <property name="autoApply">
                  <bool>true</bool>
                 </property>
-                <property name="forcedApply" stdset="0">
+                <property name="forcedApply">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -689,8 +689,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>1152</width>
-                  <height>659</height>
+                  <width>1173</width>
+                  <height>308</height>
                  </rect>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -724,7 +724,7 @@
                  </size>
                 </property>
                </widget>
-               <widget class="TaurusForm" name="taurusForm" native="true"/>
+               <widget class="TaurusForm" name="taurusForm"/>
               </widget>
              </item>
             </layout>
@@ -832,7 +832,7 @@
      <x>0</x>
      <y>0</y>
      <width>1440</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -846,6 +846,11 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>QLed</class>
+   <extends>QPixmapWidget</extends>
+   <header>taurus.qt.qtgui.display</header>
+  </customwidget>
+  <customwidget>
    <class>QPixmapWidget</class>
    <extends>QWidget</extends>
    <header>taurus.qt.qtgui.display</header>
@@ -853,6 +858,11 @@
   <customwidget>
    <class>TaurusLCD</class>
    <extends>QLCDNumber</extends>
+   <header>taurus.qt.qtgui.display</header>
+  </customwidget>
+  <customwidget>
+   <class>TaurusLed</class>
+   <extends>QLed</extends>
    <header>taurus.qt.qtgui.display</header>
   </customwidget>
   <customwidget>
@@ -918,16 +928,6 @@
    <extends>QWidget</extends>
    <header>taurus_app.custom_widgets.CAD_drawing_widget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QLed</class>
-   <extends>QPixmapWidget</extends>
-   <header>taurus.qt.qtgui.display</header>
-  </customwidget>
-  <customwidget>
-   <class>TaurusLed</class>
-   <extends>QLed</extends>
-   <header>taurus.qt.qtgui.display</header>
   </customwidget>
   <customwidget>
    <class>QtSpockWidget</class>
