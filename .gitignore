@@ -7,7 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-ipython_log*.py
 .Python
 build/
 develop-eggs/
@@ -37,6 +36,9 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# ipython config
+ipython_log_*.py
 
 # Unit test / coverage reports
 htmlcov/
