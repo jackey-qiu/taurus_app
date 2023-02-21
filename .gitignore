@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+ipython_log*.py
 .Python
 build/
 develop-eggs/
