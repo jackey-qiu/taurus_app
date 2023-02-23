@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from PyQt5 import uic
 from taurus import Device
 from taurus.qt.qtgui.container import TaurusMainWindow
@@ -8,14 +8,15 @@ from taurus_app.config.widget_model_config import widget_models, widget_taurus_f
 from taurus_app.config.cad_config import taurus_form_name
 from sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor import ParamEditorManager, MacroExecutionWindow
 from pathlib import Path
-
-main_gui = str(Path(__file__).parent / "taurus_app" / "ui" / "main_gui.ui")
-style_sheet_path = str(Path(__file__).parent / "taurus_app" / "resources" / "stylesheets" / "Takezo.qss")
+import click, glob
 
 class MyMainWindow(MacroExecutionWindow):
     def __init__(self, parent=None, designMode=False):
         MacroExecutionWindow.__init__(self, parent, designMode)
-        uic.loadUi(main_gui, self)
+
+    def init_gui(self, ui):
+        #ui is a *.ui file from qt designer
+        uic.loadUi(ui, self)
         self._qDoor = None
         self.doorChanged.connect(self.onDoorChanged)
         TaurusMainWindow.loadSettings(self)
@@ -28,7 +29,10 @@ class MyMainWindow(MacroExecutionWindow):
 
     def _set_model(self):
         for widget, model in widget_models.items():
-            getattr(self, widget).setModel(model)
+            if hasattr(self, widget):
+                getattr(self, widget).setModel(model)
+            else:
+                print('The main gui frame has no widget of {}'.format(widget))
             
     def put_down_all_absorbers(self):
         for each in self.widget_drawing.absorber_components:
@@ -74,36 +78,38 @@ class MyMainWindow(MacroExecutionWindow):
     def updateParameter(self):
         self.taurusCommandButton.setParameters([self.lineEdit_mot1.text()])
 
-if __name__ == "__main__":
+qss_list=list(map(os.path.basename,glob.glob(str(Path(__file__).parent.parent/ "resources" / "stylesheets" / "*.qss"))))
+ui_list=list(map(os.path.basename,glob.glob(str(Path(__file__).parent.parent/ "ui" / "*.ui"))))
+@click.command()
+@click.option('--ui', default='main_gui.ui',help="main gui ui file generated from Qt Desinger, possible ui files are :"+','.join(ui_list))
+@click.option('--ss', default ='Takezo.qss', help='style sheet file *.qss, possible qss files include: '+','.join(qss_list))
+def main(ui, ss):
     from taurus.core.util import argparse
     from taurus.qt.qtgui.application import TaurusApplication
-    import qdarkstyle
-    import sardana
     from PyQt5 import QtCore
 
+    ui_file = str(Path(__file__).parent.parent/ "ui" / ui)
     parser = argparse.get_taurus_parser()
-    parser.set_usage("%prog [options]")
-    parser.set_description("Sardana macro executor.\n"
-                           "It allows execution of macros, keeping history "
-                           "of previous executions and favourites.")    
-    app = TaurusApplication(sys.argv,
-                            cmd_line_parser=parser,
-                            app_name="macroexecutor",
-                            app_version=sardana.Release.version)
+    app = TaurusApplication(sys.argv)
     app.setOrganizationName("DESY")
     myWin = MyMainWindow()
+    myWin.init_gui(ui_file)
     TaurusMainWindow.loadSettings(myWin)
     #setup synotic widget: use the first frame at the beginning
     myWin.widget_synopic.run_init(synoptic_config.prepare_config(synoptic_config.synoptic['frame'][0]))
     myWin.widget_cad.set_taurus_form(getattr(myWin,taurus_form_name), taurus_form_name)
     myWin.widget_cad.set_synoptic_widget(myWin.widget_synopic)
-    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
 
     #open qss file
     #more style files can be downloaded from https://qss-stock.devsecstudio.com/index.php
+    style_sheet_path = str(Path(__file__).parent.parent/ "resources" / "stylesheets" / ss)
     File = open(style_sheet_path,'r')
     with File:
         qss = File.read()
         app.setStyleSheet(qss)
     myWin.show()
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    main()

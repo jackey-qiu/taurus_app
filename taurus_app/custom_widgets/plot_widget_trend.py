@@ -26,7 +26,6 @@ taurusM = TaurusManager()
 taurusM.changeDefaultPollingPeriod(1000)
 # print('post 5a')
 axis = DateAxisItem(orientation="bottom")
-model = 'motor/dummy_mot_ctrl/1/Position'
 # print('post 6a')
 class TaurusPlotWidget(pg.PlotWidget):
     def __init__(self, parent=None):
@@ -48,9 +47,9 @@ class TaurusPlotWidget(pg.PlotWidget):
         bt.attachToPlotItem(self.getPlotItem())
 
         # add a taurus data item
-        c2 = TaurusTrendSet(name="motor pos", pen="r", symbol=None)
-        # c2.setModel('motor/dummy_mot_ctrl/1/position')
-        c2.setModel(model)
-        self.addItem(c2)
-        self.plot_item = c2
+        self.plot_item = TaurusTrendSet(name="motor pos", pen="r", symbol=None)
+        # self.plot_item.setModel(model)
+        self.addItem(self.plot_item)
 
+    def setModel(self, model):
+        self.plot_item.setModel(model)

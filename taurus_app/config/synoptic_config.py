@@ -1,21 +1,25 @@
+from pathlib import Path
+from .tango_model_manager import get_model
 
 __all__ = ['synoptic', 'prepare_config']
 
+#svg_root = 'taurus_app/resources/svgs/'
+svg_root = Path(__file__).parent.parent / "resources" / "svgs"
 synoptic = {
             'frame':['OH','CC', 'PD', 'XFI','IM'],
-            'svg_file':['taurus_app/resources/svgs/synoptic_view_1.svg',
-                        'taurus_app/resources/svgs/synoptic_view_2_funny.svg',
-                        'taurus_app/resources/svgs/synoptic_view_3_funny.svg',
-                        'taurus_app/resources/svgs/synoptic_view_4_funny.svg',
-                        'taurus_app/resources/svgs/synoptic_view_5_funny.svg'],
+            'svg_file':list(map(lambda each: str(svg_root / each),['synoptic_view_1.svg',
+                        'synoptic_view_2_funny.svg',
+                        'synoptic_view_3_funny.svg',
+                        'synoptic_view_4_funny.svg',
+                        'synoptic_view_5_funny.svg'])),
             'model': [{
-                      'ior1':'ioregister/sis3610in_eh/1/SimulationMode',
-                      'ior2':'ioregister/sis3610in_eh/2/SimulationMode',
-                      'ior3':'ioregister/sis3610in_eh/3/SimulationMode',
-                      'offset':'motor/omsvme58_motor_eh/1/Position',
-                      'gx':'motor/omsvme58_motor_eh/1/Position',
-                      'gy':'motor/omsvme58_motor_eh/1/Position',
-                      'mot1':'motor/omsvme58_motor_eh/1/Position',
+                      'ior1':get_model('ior1','SimulationMode'),
+                      'ior2':get_model('ior2','SimulationMode'),
+                      'ior3':get_model('ior3','SimulationMode'),
+                      'offset':get_model('omot1','Position'),
+                      'gx':get_model('omot2','Position'),
+                      'gy':get_model('omot3','Position'),
+                      'mot1':get_model('dmot1','Position'),
                      }]*5,
             'hover_style':['stroke:#FF0000']*5,
             }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1440</width>
+    <width>1434</width>
     <height>998</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -301,7 +301,7 @@
                </widget>
               </item>
               <item>
-               <widget class="TaurusPlotWidget2" name="widget" native="true"/>
+               <widget class="TaurusPlotWidget" name="plot_widget2" native="true"/>
               </item>
              </layout>
             </widget>
@@ -309,15 +309,7 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Power</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QVBoxLayout" name="verticalLayout_4"/>
          </item>
         </layout>
        </widget>
@@ -689,8 +681,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>1173</width>
-                  <height>308</height>
+                  <width>98</width>
+                  <height>28</height>
                  </rect>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -831,7 +823,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1440</width>
+     <width>1434</width>
      <height>23</height>
     </rect>
    </property>
@@ -891,12 +883,6 @@
    <class>TaurusPlotWidget</class>
    <extends>QWidget</extends>
    <header>taurus_app.custom_widgets.plot_widget_trend.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TaurusPlotWidget2</class>
-   <extends>QWidget</extends>
-   <header>taurus_app.custom_widgets.plot_widget_trend2.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

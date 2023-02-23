@@ -1,18 +1,26 @@
-#keys are the widget names, values are the associated tango model address
-widget_models = {'taurusLed': 'motor/dummy_mot_ctrl/1/State',
-          'taurusLCD': 'motor/dummy_mot_ctrl/1/Position',
-          'taurusValueSpinBox':'motor/dummy_mot_ctrl/1/Position',
-          'taurusLed_2': 'motor/dummy_mot_ctrl/2/State',
-          'taurusLCD_2': 'motor/dummy_mot_ctrl/2/Position',
-          'taurusValueSpinBox_2':'motor/dummy_mot_ctrl/2/Position',
-          'taurusValueCheckBox_1':'ioregister/sis3610in_eh/1/SimulationMode',
-          'taurusValueCheckBox_2':'ioregister/sis3610in_eh/2/SimulationMode',
-          'taurusValueCheckBox_3':'ioregister/sis3610in_eh/3/SimulationMode',
-          'taurusValueCheckBox_4':'ioregister/sis3610in_eh/4/SimulationMode',
-          'taurusValueSpinBox_offset':'motor/omsvme58_motor_eh/1/Position',
-          'taurusValueSpinBox_gx':'motor/omsvme58_motor_eh/2/Position',
-          'taurusValueSpinBox_gy':'motor/omsvme58_motor_eh/3/Position'}
+from .tango_model_manager import get_model
 
-widget_taurus_form_models = {'taurusForm':{'OH':['motor1:motor/omsvme58_motor_eh/1/Position'],'CC':['motor2:motor/omsvme58_motor_eh/2/Position'],'PD':['motor3:motor/omsvme58_motor_eh/3/Position'],
-                                           'XFI':['ior1:ioregister/sis3610in_eh/1/SimulationMode'],'IM':['ior2:ioregister/sis3610in_eh/2/SimulationMode','ior3:ioregister/sis3610in_eh/3/SimulationMode']},
+#keys are the widget names, values are the associated tango model address
+widget_models = {'taurusLed': get_model('dmot1','State'),
+          'taurusLCD': get_model('dmot1','Position'),
+          'taurusValueSpinBox':get_model('dmot1','Position'),
+          'taurusLed_2': get_model('dmot2','State'),
+          'taurusLCD_2': get_model('dmot2','Position'),
+          'taurusValueSpinBox_2':get_model('dmot2','Position'),
+          'taurusValueCheckBox_1':get_model('ior1','SimulationMode'),
+          'taurusValueCheckBox_2':get_model('ior2','SimulationMode'),
+          'taurusValueCheckBox_3':get_model('ior3','SimulationMode'),
+          'taurusValueCheckBox_4':get_model('ior4','SimulationMode'),
+          'taurusValueSpinBox_offset':get_model('omot1','Position'),
+          'taurusValueSpinBox_gx':get_model('omot2','Position'),
+          'taurusValueSpinBox_gy':get_model('omot3','Position'),
+          'plot_widget':get_model('dmot1','Position'),
+          'plot_widget2':get_model('dmot2','Position'),
+          }
+
+widget_taurus_form_models = {'taurusForm':{'OH':[f"motor1:{get_model('omot1','Position')}"],
+                                           'CC':[f"motor2:{get_model('omot2','Position')}"],
+                                           'PD':[f"motor3:{get_model('omot3','Position')}"],
+                                           'XFI':[f"ior1:{get_model('ior1','SimulationMode')}"],
+                                           'IM':[f"ior2:{get_model('ior2','SimulationMode')}",f"ior3:{get_model('ior3','SimulationMode')}"]},
                             }
